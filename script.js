@@ -1,31 +1,48 @@
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const sidebar = document.getElementById('sidebar');
-const sidebarOverlay = document.getElementById('sidebarOverlay');
-const sidebarClose = document.getElementById('sidebarClose');
-const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const dropdownNav = document.getElementById('dropdownNav');
+    const dropdownLinks = document.querySelectorAll('.dropdown-nav-list a');
+    const ctaButton = document.getElementById('ctaButton');
+    const sectionBeranda = document.getElementById('beranda');
 
-function openSidebar() {
-    sidebar.classList.add('active');
-    sidebarOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+    let isScrollUnlocked = false;
 
-function closeSidebar() {
-    sidebar.classList.remove('active');
-    sidebarOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
+    // Toggle Dropdown
+    hamburgerBtn.addEventListener('click', () => {
+        dropdownNav.classList.toggle('active');
+    });
 
-hamburgerBtn.addEventListener('click', openSidebar);
-sidebarClose.addEventListener('click', closeSidebar);
-sidebarOverlay.addEventListener('click', closeSidebar);
+    // Tutup dropdown saat klik link
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            dropdownNav.classList.remove('active');
+        });
+    });
 
-sidebarLinks.forEach(link => {
-    link.addEventListener('click', closeSidebar);
-});
+    // Tutup dropdown saat klik di luar
+    document.addEventListener('click', (e) => {
+        if (!hamburgerBtn.contains(e.target) && !dropdownNav.contains(e.target)) {
+            dropdownNav.classList.remove('active');
+        }
+    });
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-        closeSidebar();
+    // Tombol CTA
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            isScrollUnlocked = true;
+            document.body.style.overflow = 'auto';
+            sectionBeranda.scrollIntoView({ behavior: 'smooth' });
+        });
     }
+
+    // Unlock scroll untuk semua anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function() {
+            if (!isScrollUnlocked) {
+                isScrollUnlocked = true;
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
 });

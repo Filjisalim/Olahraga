@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- ==================== HEADER / NAVBAR ==================== -->
     <header class="navbar">
         <div class="logo-box">LOGO WEBSITE</div>
         <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka menu navigasi">
@@ -16,12 +15,19 @@
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
+        <nav class="dropdown-nav" id="dropdownNav">
+            <ul class="dropdown-nav-list">
+                <li><a href="#hero">Beranda</a></li>
+                <li><a href="#beranda">Modul Pembelajaran</a></li>
+                <li><a href="#bantuan">Bantuan</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Overlay sidebar -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Sidebar menu -->
     <aside class="sidebar" id="sidebar">
         <button class="sidebar-close" id="sidebarClose">✕ Tutup</button>
         <nav>
@@ -35,75 +41,67 @@
         </nav>
     </aside>
 
-    <!-- ==================== HERO SECTION ==================== -->
     <section class="hero" id="hero">
-        <!-- Judul Utama -->
         <div class="hero-title-box">
             <h1>Judul / Tagline Utama Website Pembelajaran</h1>
         </div>
 
-        <!-- Deskripsi Singkat -->
         <div class="hero-desc-box">
             <p>Sambutan / Deskripsi Singkat — Selamat datang di platform pembelajaran online. Temukan berbagai modul interaktif untuk meningkatkan keterampilan Anda.</p>
         </div>
 
-        <!-- Kotak panjang: 3 ikon kecil di kiri + CTA di kanan -->
         <div class="feature-cta-bar">
             <div class="icons-group">
                 <div class="icon-box">X</div>
                 <div class="icon-box">X</div>
                 <div class="icon-box">X</div>
             </div>
-            <a href="#beranda" class="cta-button">Mulai Belajar Sekarang</a>
+            <a href="#beranda" class="cta-button" id="ctaButton">Mulai Belajar Sekarang</a>
         </div>
     </section>
 
-    <!-- ==================== SECTION BERANDA ==================== -->
     <section class="beranda-section" id="beranda">
-        <div class="section-title-box">
-            <h2>Pilih Modul Pembelajaran</h2>
+        
+        <div class="beranda-motto">
+            <h2>Your Healthy Life Begins Here</h2>
         </div>
+    
+        <a href="#modul" class="beranda-cta-more">Cek Lebih Banyak</a>
 
         <div class="card-grid">
-            <!-- Kartu 1 -->
             <div class="card">
-                <div class="card-thumbnail">Placeholder Image</div>
-                <div class="card-body">
-                    <div class="card-title">Modul Matematika Dasar</div>
-                    <div class="card-desc">Pelajari konsep dasar matematika termasuk aljabar, geometri, dan aritmatika.</div>
-                    <a href="#" class="card-btn">Buka Modul</a>
+                <div class="card-thumbnail">Cuplikan foto/video</div>
+                    <div class="card-body">
+                        <div class="card-title">Judul Materi</div>
+                        <div class="card-desc">
+                            Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
+                            <a href="#modul" class="card-arrow-btn">&gt;</a>
+                    </div>
                 </div>
             </div>
-            <!-- Kartu 2 -->
+            
             <div class="card">
-                <div class="card-thumbnail">Placeholder Image</div>
+                <div class="card-thumbnail">Cuplikan foto/video</div>
                 <div class="card-body">
-                    <div class="card-title">Modul Bahasa Inggris</div>
-                    <div class="card-desc">Tingkatkan kemampuan bahasa Inggris Anda dengan latihan interaktif.</div>
-                    <a href="#" class="card-btn">Buka Modul</a>
+                <div class="card-title">Judul Materi</div>
+                <div class="card-desc">
+                    Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
+                    <a href="#modul" class="card-arrow-btn">&gt;</a>
                 </div>
             </div>
-            <!-- Kartu 3 -->
+            </div>
+            
             <div class="card">
-                <div class="card-thumbnail">Placeholder Image</div>
+                <div class="card-thumbnail">Cuplikan foto/video</div>
                 <div class="card-body">
-                    <div class="card-title">Modul Pemrograman Web</div>
-                    <div class="card-desc">Belajar HTML, CSS, dan JavaScript dari dasar hingga mahir.</div>
-                    <a href="#" class="card-btn">Buka Modul</a>
+                    <div class="card-title">Judul Materi</div>
+                    <div class="card-desc">
+                        Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
+                        <a href="#modul" class="card-arrow-btn">&gt;</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Placeholder sections -->
-    <section class="placeholder-section" id="bantuan">
-        <div class="placeholder-box">📍 Section Bantuan (Wireframe Placeholder)</div>
-    </section>
-    <section class="placeholder-section" id="tentang">
-        <div class="placeholder-box">📍 Section Tentang Kami (Wireframe Placeholder)</div>
-    </section>
-    <section class="placeholder-section" id="kontak">
-        <div class="placeholder-box">📍 Section Kontak (Wireframe Placeholder)</div>
     </section>
 
     <script src="script.js" defer></script>
