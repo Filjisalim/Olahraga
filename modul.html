@@ -1,613 +1,427 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul Pembelajaran</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* ===== MODUL PAGE ===== */
-        .modul-page {
-            min-height: 100vh;
-            background-color: #f5f5f5;
-            padding-top: 0;
-        }
-
-        .modul-header {
-            background-color: #fff;
-            border-bottom: 2px solid #333;
-            padding: 32px 40px 24px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .modul-header-top {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-
-        .modul-header h1 {
-            font-size: 2rem;
-            font-weight: bold;
-            letter-spacing: -0.5px;
-        }
-
-        .modul-header p {
-            font-size: 0.95rem;
-            color: #555;
-            max-width: 500px;
-        }
-
-        .modul-count-badge {
-            border: 2px solid #333;
-            padding: 6px 16px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            background-color: #e8e8e8;
-            white-space: nowrap;
-        }
-
-        /* Filter/Search Bar */
-        .modul-filter-bar {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-label {
-            font-weight: bold;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .filter-tag {
-            border: 2px solid #333;
-            padding: 6px 16px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            background-color: #fff;
-            cursor: pointer;
-            transition: background-color 0.15s;
-        }
-
-        .filter-tag.active,
-        .filter-tag:hover {
-            background-color: #333;
-            color: #fff;
-        }
-
-        /* ===== MODUL GRID ===== */
-        .modul-grid-section {
-            padding: 40px 40px 60px 40px;
-        }
-
-        .modul-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* ===== MODUL CARD ===== */
-        .modul-card {
-            border: 2px solid #333;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: box-shadow 0.2s, transform 0.2s;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .modul-card:hover {
-            box-shadow: 6px 6px 0 #333;
-            transform: translate(-2px, -2px);
-        }
-
-        .modul-thumbnail {
-            height: 200px;
-            background-color: #e8e8e8;
-            border-bottom: 2px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modul-thumbnail-label {
-            color: #666;
-        }
-
-        .modul-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            border: 2px solid #333;
-            background-color: #fff;
-            padding: 2px 10px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .modul-duration {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            border: 2px solid #333;
-            background-color: #333;
-            color: #fff;
-            padding: 2px 8px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .modul-card-body {
-            padding: 16px 18px 18px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-        }
-
-        .modul-card-title {
-            font-weight: bold;
-            font-size: 1rem;
-            line-height: 1.4;
-            border-left: 3px solid #333;
-            padding-left: 10px;
-        }
-
-        .modul-card-desc {
-            font-size: 0.85rem;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .modul-card-meta {
-            display: flex;
-            gap: 10px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            margin-top: auto;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .meta-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #333;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .modul-card-cta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 2px solid #333;
-            padding: 10px 18px;
-            background-color: #fafafa;
-            font-weight: bold;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background-color 0.15s;
-        }
-
-        .modul-card:hover .modul-card-cta {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .cta-arrow {
-            width: 28px;
-            height: 28px;
-            border: 2px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border-radius: 50%;
-            transition: background-color 0.15s, border-color 0.15s, color 0.15s;
-        }
-
-        .modul-card:hover .cta-arrow {
-            border-color: #fff;
-            background-color: #fff;
-            color: #333;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .modul-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .modul-header {
-                padding: 24px 20px 16px 20px;
-            }
-            .modul-grid-section {
-                padding: 24px 20px 40px 20px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .modul-grid {
-                grid-template-columns: 1fr;
-            }
-            .modul-header h1 {
-                font-size: 1.5rem;
-            }
-            .modul-header-top {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-        }
-
-        /* Override body overflow untuk halaman modul */
-        body.modul-active {
-            overflow: auto !important;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modul Pembelajaran — Rythme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modul.css">
 </head>
-<body class="modul-active">
+<body class="page-modul">
 
-    <!-- NAVBAR (sama persis dengan index) -->
-    <header class="navbar">
-        <a href="index.html" class="logo-box" style="text-decoration:none; color:#333;">LOGO WEBSITE</a>
-        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka menu navigasi">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-        <nav class="dropdown-nav" id="dropdownNav">
-            <ul class="dropdown-nav-list">
-                <li><a href="index.html#hero">Beranda</a></li>
-                <li><a href="modul.html" class="nav-active">Modul Pembelajaran</a></li>
-                <li><a href="index.html#bantuan">Bantuan</a></li>
-                <li><a href="index.html#tentang">Tentang Kami</a></li>
-                <li><a href="index.html#kontak">Kontak</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+        </svg>
+      </div>
+      Ryth<span class="accent">me</span>
+    </a>
 
-    <!-- MODUL PAGE CONTENT -->
-    <main class="modul-page">
+    <nav class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="modul.html" class="active">Modul Pembelajaran</a>
+      <a href="#bantuan">Bantuan</a>
+      <a href="#tentang">Tentang Kami</a>
+      <a href="#kontak" class="nav-cta">Mulai Belajar</a>
+    </nav>
 
-        <!-- Header Section -->
-        <div class="modul-header">
-            <div class="modul-header-top">
-                <div>
-                    <h1>Modul Pembelajaran</h1>
-                    <p>Pilih modul yang ingin kamu pelajari. Setiap modul dilengkapi materi teori, video, dan kuis interaktif.</p>
-                </div>
-                <div class="modul-count-badge">12 Modul Tersedia</div>
-            </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
 
-            <!-- Filter Tags -->
-            <div class="modul-filter-bar">
-                <span class="filter-label">Filter:</span>
-                <button class="filter-tag active">Semua</button>
-                <button class="filter-tag">Pemula</button>
-                <button class="filter-tag">Menengah</button>
-                <button class="filter-tag">Lanjutan</button>
-            </div>
+  <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <a href="index.html">Beranda</a>
+    <a href="modul.html">Modul Pembelajaran</a>
+    <a href="#bantuan">Bantuan</a>
+    <a href="#tentang">Tentang Kami</a>
+    <a href="#kontak" class="mob-cta">Mulai Belajar</a>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <main class="modul-page">
+
+    <!-- HERO HEADER -->
+    <div class="modul-hero">
+      <div class="modul-hero-inner">
+        <div class="modul-hero-left">
+          <span class="section-kicker">Pilih & Mulai Belajar</span>
+          <h1 class="modul-hero-title">Modul <em>Pembelajaran</em></h1>
+          <p class="modul-hero-desc">Setiap modul dilengkapi materi teori, video demonstrasi, dan kuis interaktif. Mulai dari level mana pun!</p>
         </div>
-
-        <!-- Grid Modul -->
-        <div class="modul-grid-section">
-            <div class="modul-grid">
-
-                <!-- Card 1 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Pemula</span>
-                        <span class="modul-duration">12 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 01 — Pengantar & Konsep Dasar</div>
-                        <div class="modul-card-desc">Pelajari fondasi utama sebelum masuk ke materi lebih dalam. Cocok untuk pemula yang baru memulai.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 5 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 2 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Pemula</span>
-                        <span class="modul-duration">18 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 02 — Nutrisi & Pola Makan Sehat</div>
-                        <div class="modul-card-desc">Memahami kebutuhan gizi harian, komposisi makronutrien, dan cara merancang pola makan seimbang.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 6 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 3 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Menengah</span>
-                        <span class="modul-duration">22 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 03 — Aktivitas Fisik & Olahraga</div>
-                        <div class="modul-card-desc">Panduan memulai rutinitas olahraga yang efektif, jenis latihan, dan cara mengukur progress fisik.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 7 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 4 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Menengah</span>
-                        <span class="modul-duration">15 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 04 — Manajemen Stres & Tidur</div>
-                        <div class="modul-card-desc">Strategi mengelola tekanan sehari-hari dan pentingnya kualitas tidur terhadap kesehatan jangka panjang.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 5 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 5 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Menengah</span>
-                        <span class="modul-duration">20 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 05 — Kesehatan Mental & Mindfulness</div>
-                        <div class="modul-card-desc">Pengenalan praktik mindfulness, meditasi sederhana, dan cara menjaga keseimbangan emosional.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 6 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 6 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Lanjutan</span>
-                        <span class="modul-duration">25 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 06 — Hidrasi & Detoksifikasi Alami</div>
-                        <div class="modul-card-desc">Memahami peran cairan dalam tubuh, tanda dehidrasi, dan metode detoksifikasi berbasis makanan alami.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 5 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 7 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Pemula</span>
-                        <span class="modul-duration">14 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 07 — Postur Tubuh & Ergonomi</div>
-                        <div class="modul-card-desc">Cara duduk, berdiri, dan bergerak yang benar untuk mencegah nyeri punggung dan cedera postur kronis.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 4 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 8 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Menengah</span>
-                        <span class="modul-duration">19 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 08 — Sistem Imun & Pencegahan Penyakit</div>
-                        <div class="modul-card-desc">Bagaimana sistem imun bekerja dan langkah-langkah praktis meningkatkan daya tahan tubuh secara alami.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 6 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 9 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Lanjutan</span>
-                        <span class="modul-duration">30 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 09 — Kesehatan Reproduksi & Hormonal</div>
-                        <div class="modul-card-desc">Pemahaman mendasar tentang sistem hormonal, siklus reproduksi, dan cara menjaga kesehatannya.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 8 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 10 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Pemula</span>
-                        <span class="modul-duration">16 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 10 — Kesehatan Kulit dari Dalam</div>
-                        <div class="modul-card-desc">Hubungan antara pola makan, tidur, dan stres terhadap kondisi kulit, serta rutinitas perawatan dasar.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 5 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 11 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Lanjutan</span>
-                        <span class="modul-duration">28 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 11 — Kesehatan Pencernaan & Mikrobiom</div>
-                        <div class="modul-card-desc">Peran bakteri usus, probiotik, serta pola makan yang mendukung sistem pencernaan yang optimal.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 7 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
-                <!-- Card 12 -->
-                <a href="detail-modul.html" class="modul-card">
-                    <div class="modul-thumbnail">
-                        <span class="modul-thumbnail-label">Thumbnail / Preview</span>
-                        <span class="modul-badge">Lanjutan</span>
-                        <span class="modul-duration">35 menit</span>
-                    </div>
-                    <div class="modul-card-body">
-                        <div class="modul-card-title">Modul 12 — Gaya Hidup Sehat Jangka Panjang</div>
-                        <div class="modul-card-desc">Merangkum semua konsep dan membangun rencana aksi nyata untuk gaya hidup sehat yang berkelanjutan.</div>
-                        <div class="modul-card-meta">
-                            <span class="meta-item"><span class="meta-dot"></span> 8 Topik</span>
-                            <span class="meta-item"><span class="meta-dot"></span> 1 Kuis</span>
-                            <span class="meta-item"><span class="meta-dot"></span> Video + Teks</span>
-                        </div>
-                    </div>
-                    <div class="modul-card-cta">
-                        <span>Pelajari Modul</span>
-                        <span class="cta-arrow">›</span>
-                    </div>
-                </a>
-
+        <div class="modul-hero-right">
+          <div class="modul-stat-card">
+            <div class="modul-stat-item">
+              <div class="modul-stat-num">12</div>
+              <div class="modul-stat-label">Modul</div>
             </div>
+            <div class="modul-stat-divider"></div>
+            <div class="modul-stat-item">
+              <div class="modul-stat-num">3</div>
+              <div class="modul-stat-label">Level</div>
+            </div>
+            <div class="modul-stat-divider"></div>
+            <div class="modul-stat-item">
+              <div class="modul-stat-num">8</div>
+              <div class="modul-stat-label">Alat Senam</div>
+            </div>
+          </div>
         </div>
-    </main>
+      </div>
 
-    <script>
-        // Hamburger dropdown (sama dengan script utama)
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const dropdownNav = document.getElementById('dropdownNav');
+      <!-- Filter bar -->
+      <div class="modul-hero-inner" style="padding-top: 0;">
+        <div class="filter-bar">
+          <span class="filter-label">Filter:</span>
+          <div class="filter-tags">
+            <button class="filter-tag active" data-filter="semua">Semua</button>
+            <button class="filter-tag" data-filter="pemula">🌱 Pemula</button>
+            <button class="filter-tag" data-filter="menengah">⚡ Menengah</button>
+            <button class="filter-tag" data-filter="lanjutan">🔥 Lanjutan</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        hamburgerBtn.addEventListener('click', () => {
-            dropdownNav.classList.toggle('active');
+    <!-- MODULE GRID -->
+    <div class="modul-grid-section">
+      <div class="modul-grid" id="modulGrid">
+
+        <!-- Card 1 -->
+        <a href="detail-modul.html" class="modul-card" data-level="pemula">
+          <div class="modul-thumb thumb-green">
+            <span class="modul-badge badge-pemula">🌱 Pemula</span>
+            <div class="modul-thumb-icon">🎀</div>
+            <span class="modul-duration">12 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 01</div>
+            <h3 class="modul-card-title">Pengantar & Konsep Dasar Senam Irama</h3>
+            <p class="modul-card-desc">Fondasi utama sebelum masuk ke materi lebih dalam. Pelajari sejarah, manfaat, dan prinsip dasar senam ritmik.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 5 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="detail-modul.html" class="modul-card" data-level="pemula">
+          <div class="modul-thumb thumb-peach">
+            <span class="modul-badge badge-pemula">🌱 Pemula</span>
+            <div class="modul-thumb-icon">🎵</div>
+            <span class="modul-duration">18 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 02</div>
+            <h3 class="modul-card-title">Musikalitas & Kepekaan Irama</h3>
+            <p class="modul-card-desc">Latih telinga dan tubuh untuk merespons musik — ketukan, tempo, dinamika, dan frasa lagu.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 6 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="detail-modul.html" class="modul-card" data-level="pemula">
+          <div class="modul-thumb thumb-purple">
+            <span class="modul-badge badge-pemula">🌱 Pemula</span>
+            <div class="modul-thumb-icon">🤸</div>
+            <span class="modul-duration">20 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 03</div>
+            <h3 class="modul-card-title">Kelenturan & Pemanasan Dasar</h3>
+            <p class="modul-card-desc">Rutinitas pemanasan dan peregangan yang wajib dilakukan sebelum setiap sesi latihan senam irama.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 5 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="detail-modul.html" class="modul-card" data-level="pemula">
+          <div class="modul-thumb thumb-green">
+            <span class="modul-badge badge-pemula">🌱 Pemula</span>
+            <div class="modul-thumb-icon">🎀</div>
+            <span class="modul-duration">22 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 04</div>
+            <h3 class="modul-card-title">Teknik Dasar Gerakan dengan Pita</h3>
+            <p class="modul-card-desc">Pelajari teknik mengayun, memutar, melempar, dan menangkap pita secara ritmis dan elegan.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 6 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 5 -->
+        <a href="detail-modul.html" class="modul-card" data-level="menengah">
+          <div class="modul-thumb thumb-amber">
+            <span class="modul-badge badge-menengah">⚡ Menengah</span>
+            <div class="modul-thumb-icon">⭕</div>
+            <span class="modul-duration">25 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 05</div>
+            <h3 class="modul-card-title">Simpai — Teknik & Koordinasi</h3>
+            <p class="modul-card-desc">Kuasai gerakan rolling, swinging, passing, dan tossing simpai dengan koordinasi penuh tubuh.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 7 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 6 -->
+        <a href="detail-modul.html" class="modul-card" data-level="menengah">
+          <div class="modul-thumb thumb-amber">
+            <span class="modul-badge badge-menengah">⚡ Menengah</span>
+            <div class="modul-thumb-icon">🏐</div>
+            <span class="modul-duration">22 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 06</div>
+            <h3 class="modul-card-title">Bola — Kelincahan & Kelembutan</h3>
+            <p class="modul-card-desc">Teknik menggulir, memantul, dan melambungkan bola senam dengan gerakan tubuh yang mengalir natural.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 6 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 7 -->
+        <a href="detail-modul.html" class="modul-card" data-level="menengah">
+          <div class="modul-thumb thumb-amber">
+            <span class="modul-badge badge-menengah">⚡ Menengah</span>
+            <div class="modul-thumb-icon">🪃</div>
+            <span class="modul-duration">20 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 07</div>
+            <h3 class="modul-card-title">Gada — Ritme & Simetri Gerak</h3>
+            <p class="modul-card-desc">Eksplorasi gerakan simetris dan asimetris menggunakan sepasang gada dengan irama yang presisi.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 5 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 8 -->
+        <a href="detail-modul.html" class="modul-card" data-level="menengah">
+          <div class="modul-thumb thumb-amber">
+            <span class="modul-badge badge-menengah">⚡ Menengah</span>
+            <div class="modul-thumb-icon">💃</div>
+            <span class="modul-duration">28 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 08</div>
+            <h3 class="modul-card-title">Langkah & Lompatan Dasar</h3>
+            <p class="modul-card-desc">Berbagai pola langkah ritmis, lompatan, dan transisi tubuh yang menjadi fondasi koreografi senam irama.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 7 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 9 -->
+        <a href="detail-modul.html" class="modul-card" data-level="lanjutan">
+          <div class="modul-thumb thumb-rose">
+            <span class="modul-badge badge-lanjutan">🔥 Lanjutan</span>
+            <div class="modul-thumb-icon">🌀</div>
+            <span class="modul-duration">30 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 09</div>
+            <h3 class="modul-card-title">Putaran & Keseimbangan Lanjutan</h3>
+            <p class="modul-card-desc">Teknik pirouette, pivot, dan pose keseimbangan statis-dinamis untuk penampilan yang memukau.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 8 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 10 -->
+        <a href="detail-modul.html" class="modul-card" data-level="lanjutan">
+          <div class="modul-thumb thumb-rose">
+            <span class="modul-badge badge-lanjutan">🔥 Lanjutan</span>
+            <div class="modul-thumb-icon">🎭</div>
+            <span class="modul-duration">35 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 10</div>
+            <h3 class="modul-card-title">Ekspresi & Artistik dalam Penampilan</h3>
+            <p class="modul-card-desc">Cara membangun koneksi emosional dengan musik dan menyampaikan cerita melalui setiap gerakan.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 6 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 11 -->
+        <a href="detail-modul.html" class="modul-card" data-level="lanjutan">
+          <div class="modul-thumb thumb-rose">
+            <span class="modul-badge badge-lanjutan">🔥 Lanjutan</span>
+            <div class="modul-thumb-icon">🤝</div>
+            <span class="modul-duration">32 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 11</div>
+            <h3 class="modul-card-title">Senam Irama Kelompok & Sinkronisasi</h3>
+            <p class="modul-card-desc">Prinsip kerja sama, formasi, dan sinkronisasi gerak dalam penampilan senam irama beregu.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 7 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+        <!-- Card 12 -->
+        <a href="detail-modul.html" class="modul-card" data-level="lanjutan">
+          <div class="modul-thumb thumb-rose">
+            <span class="modul-badge badge-lanjutan">🔥 Lanjutan</span>
+            <div class="modul-thumb-icon">🏆</div>
+            <span class="modul-duration">40 menit</span>
+          </div>
+          <div class="modul-card-body">
+            <div class="modul-card-num">Modul 12</div>
+            <h3 class="modul-card-title">Menyusun Koreografi & Persiapan Pentas</h3>
+            <p class="modul-card-desc">Panduan lengkap merancang koreografi, memilih musik, kostum, dan persiapan mental menjelang kompetisi.</p>
+            <div class="modul-card-meta">
+              <span class="meta-chip">📚 9 Topik</span>
+              <span class="meta-chip">❓ 1 Kuis</span>
+              <span class="meta-chip">🎬 Video</span>
+            </div>
+          </div>
+          <div class="modul-card-cta">
+            <span>Pelajari Modul</span>
+            <div class="cta-arrow">›</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Hamburger
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = hamburgerBtn.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen);
+      mobileNav.setAttribute('aria-hidden', !isOpen);
+      mobileNav.classList.toggle('visible', isOpen);
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('visible');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburgerBtn.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('visible');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Filter logic
+    const filterTags = document.querySelectorAll('.filter-tag');
+    const cards      = document.querySelectorAll('.modul-card');
+
+    filterTags.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterTags.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const show = filter === 'semua' || card.dataset.level === filter;
+          card.style.display = show ? 'flex' : 'none';
         });
+      });
+    });
+  </script>
 
-        document.addEventListener('click', (e) => {
-            if (!hamburgerBtn.contains(e.target) && !dropdownNav.contains(e.target)) {
-                dropdownNav.classList.remove('active');
-            }
-        });
-
-        // Filter tag toggle
-        document.querySelectorAll('.filter-tag').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>

@@ -1,109 +1,340 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireframe - Website Pembelajaran</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rythme — Belajar Senam Irama dengan Menyenangkan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo-box">LOGO WEBSITE</div>
-        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka menu navigasi">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-    <nav class="dropdown-nav" id="dropdownNav">
-    <ul class="dropdown-nav-list">
-        <li><a href="#hero">Beranda</a></li>
-        <li><a href="modul.html">Modul Pembelajaran</a></li> 
-        <li><a href="#bantuan">Bantuan</a></li>
-        <li><a href="#tentang">Tentang Kami</a></li>
-        <li><a href="#kontak">Kontak</a></li>
-    </ul>
-</nav>
-    </header>
+  <!-- ========================
+       NAVBAR
+  ======================== -->
+  <header class="navbar">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+        </svg>
+      </div>
+      Ryth<span class="accent">me</span>
+    </a>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Beranda</a>
+      <a href="modul.html">Modul Pembelajaran</a>
+      <a href="#bantuan">Bantuan</a>
+      <a href="#tentang">Tentang Kami</a>
+      <a href="#kontak" class="nav-cta">Mulai Belajar</a>
+    </nav>
 
-    <aside class="sidebar" id="sidebar">
-        <button class="sidebar-close" id="sidebarClose">✕ Tutup</button>
-        <nav>
-            <ul class="sidebar-nav">
-                <li><a href="#hero">Beranda</a></li>
-                <li><a href="Modul.html">Modul Pembelajaran</a></li>
-                <li><a href="#bantuan">Bantuan</a></li>
-                <li><a href="#tentang">Tentang Kami</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-            </ul>
-        </nav>
-    </aside>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </header>
 
-    <section class="hero" id="hero">
-        <div class="hero-title-box">
-            <h1>Judul / Tagline Utama Website Pembelajaran</h1>
+  <!-- Mobile dropdown -->
+  <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <a href="index.html">Beranda</a>
+    <a href="modul.html">Modul Pembelajaran</a>
+    <a href="#bantuan">Bantuan</a>
+    <a href="#tentang">Tentang Kami</a>
+    <a href="#kontak" class="mob-cta">Mulai Belajar</a>
+  </nav>
+
+  <!-- ========================
+       HERO
+  ======================== -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+
+      <!-- LEFT: Copy -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Platform Senam Irama #1 untuk Pelajar Indonesia
         </div>
 
-        <div class="hero-desc-box">
-            <p>Sambutan / Deskripsi Singkat — Selamat datang di platform pembelajaran online. Temukan berbagai modul interaktif untuk meningkatkan keterampilan Anda.</p>
+        <h1 class="hero-title">
+          Gerak <span class="highlight">Indah</span> Dimulai dari Irama
+        </h1>
+
+        <p class="hero-desc">
+          Pelajari senam irama dari dasar hingga mahir — gerakan, teknik, dan musikalitas yang membuatmu tampil percaya diri di atas lantai.
+        </p>
+
+        <div class="feature-pills">
+          <div class="pill">
+            <div class="pill-icon green">🎀</div>
+            Teknik Gerak
+          </div>
+          <div class="pill">
+            <div class="pill-icon peach">🎵</div>
+            Musikalitas
+          </div>
+          <div class="pill">
+            <div class="pill-icon purple">🤸</div>
+            Kelenturan
+          </div>
         </div>
 
-        <div class="feature-cta-bar">
-            <div class="icons-group">
-                <div class="icon-box">X</div>
-                <div class="icon-box">X</div>
-                <div class="icon-box">X</div>
-            </div>
-            <a href="#beranda" class="cta-button" id="ctaButton">Mulai Belajar Sekarang</a>
+        <div class="cta-group">
+          <button class="btn-primary" id="ctaBtn">
+            Mulai Belajar Sekarang
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+          </button>
+          <a href="modul.html" class="btn-ghost">
+            Lihat Modul
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
-    </section>
 
-    <section class="beranda-section" id="beranda">
-        
-        <div class="beranda-motto">
-            <h2>Your Healthy Life Begins Here</h2>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">12+</div>
+            <div class="stat-label">Modul Tersedia</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-num">8</div>
+            <div class="stat-label">Alat Senam</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Gratis Selamanya</div>
+          </div>
         </div>
-    
-        <a href="#modul" class="beranda-cta-more">Cek Lebih Banyak</a>
+      </div>
 
-        <div class="card-grid">
-            <div class="card">
-                <div class="card-thumbnail">Cuplikan foto/video</div>
-                    <div class="card-body">
-                        <div class="card-title">Judul Materi</div>
-                        <div class="card-desc">
-                            Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
-                            <a href="#modul" class="card-arrow-btn">&gt;</a>
-                    </div>
-                </div>
+      <!-- RIGHT: Illustration -->
+      <div class="hero-right">
+
+        <!-- Floating card 1 -->
+        <div class="float-card float-card-1">
+          <div class="float-card-icon" style="background: var(--green-l);">🎀</div>
+          <div class="float-card-text">
+            <div class="float-card-label">Latihan Hari Ini</div>
+            <div class="float-card-value">Pita & Simpai</div>
+            <div class="mini-progress">
+              <div class="mini-progress-fill" style="width: 66%"></div>
             </div>
-            
-            <div class="card">
-                <div class="card-thumbnail">Cuplikan foto/video</div>
-                <div class="card-body">
-                <div class="card-title">Judul Materi</div>
-                <div class="card-desc">
-                    Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
-                    <a href="#modul" class="card-arrow-btn">&gt;</a>
-                </div>
-            </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-thumbnail">Cuplikan foto/video</div>
-                <div class="card-body">
-                    <div class="card-title">Judul Materi</div>
-                    <div class="card-desc">
-                        Penj Deskripsi singkat yang menjelaskan isi dari materi ini.
-                        <a href="#modul" class="card-arrow-btn">&gt;</a>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
 
-    <script src="script.js" defer></script>
+        <!-- Main SVG illustration -->
+        <svg class="hero-illustration" viewBox="0 0 460 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="230" cy="240" r="200" fill="#EEF7F2"/>
+          <circle cx="230" cy="240" r="170" fill="none" stroke="#C8E8D7" stroke-width="1.5" stroke-dasharray="8 6"/>
+          <circle cx="230" cy="240" r="140" fill="none" stroke="#C8E8D7" stroke-width="1" stroke-dasharray="4 8" opacity="0.5"/>
+          <!-- Body -->
+          <ellipse cx="230" cy="300" rx="48" ry="58" fill="#7EC8A4"/>
+          <!-- Head -->
+          <circle cx="230" cy="220" r="38" fill="#FDDCB5"/>
+          <!-- Hair -->
+          <ellipse cx="230" cy="194" rx="40" ry="24" fill="#4A3728"/>
+          <path d="M195 200 Q188 180 196 165" stroke="#4A3728" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M265 200 Q272 180 264 165" stroke="#4A3728" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <!-- Face -->
+          <path d="M218 228 Q230 240 242 228" stroke="#4A3728" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <circle cx="220" cy="218" r="4" fill="#4A3728"/>
+          <circle cx="240" cy="218" r="4" fill="#4A3728"/>
+          <circle cx="221" cy="216" r="1.5" fill="white"/>
+          <circle cx="241" cy="216" r="1.5" fill="white"/>
+          <circle cx="212" cy="228" r="6" fill="#F4A87C" opacity="0.4"/>
+          <circle cx="248" cy="228" r="6" fill="#F4A87C" opacity="0.4"/>
+          <!-- Arms raised -->
+          <path d="M185 290 Q160 260 150 230" stroke="#FDDCB5" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <path d="M275 290 Q300 260 310 230" stroke="#FDDCB5" stroke-width="18" stroke-linecap="round" fill="none"/>
+          <circle cx="150" cy="228" r="13" fill="#FDDCB5"/>
+          <circle cx="310" cy="228" r="13" fill="#FDDCB5"/>
+          <!-- Legs -->
+          <path d="M210 355 Q205 390 200 420" stroke="#5C9E7E" stroke-width="22" stroke-linecap="round" fill="none"/>
+          <path d="M250 355 Q255 390 260 420" stroke="#5C9E7E" stroke-width="22" stroke-linecap="round" fill="none"/>
+          <ellipse cx="200" cy="424" rx="20" ry="10" fill="#F2875A"/>
+          <ellipse cx="260" cy="424" rx="20" ry="10" fill="#F2875A"/>
+          <!-- Mat -->
+          <ellipse cx="230" cy="434" rx="90" ry="14" fill="#C8E8D7" opacity="0.5"/>
+          <!-- Ribbon decoration -->
+          <path d="M130 180 Q150 160 155 175 Q160 190 140 200 Q120 210 130 180Z" fill="#F2875A" opacity="0.6"/>
+          <path d="M135 178 Q165 155 168 175" stroke="#F2875A" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.8"/>
+          <!-- Decorative elements -->
+          <ellipse cx="340" cy="170" rx="13" ry="7" fill="#F4A87C" opacity="0.5" transform="rotate(25 340 170)"/>
+          <ellipse cx="105" cy="350" rx="11" ry="6" fill="#B8A9EE" opacity="0.5" transform="rotate(-20 105 350)"/>
+          <ellipse cx="355" cy="340" rx="14" ry="8" fill="#7EC8A4" opacity="0.45" transform="rotate(40 355 340)"/>
+          <!-- Sparkles -->
+          <circle cx="148" cy="120" r="5" fill="#F2875A" opacity="0.7"/>
+          <circle cx="320" cy="115" r="3.5" fill="#5C9E7E" opacity="0.7"/>
+          <circle cx="370" cy="200" r="4" fill="#F2875A" opacity="0.5"/>
+          <circle cx="90" cy="270" r="3" fill="#B8A9EE" opacity="0.6"/>
+          <circle cx="390" cy="380" r="4.5" fill="#7EC8A4" opacity="0.5"/>
+        </svg>
+
+        <!-- Floating card 2 -->
+        <div class="float-card float-card-2">
+          <div class="float-card-icon" style="background: var(--peach-l);">🎵</div>
+          <div class="float-card-text">
+            <div class="float-card-label">Modul Terpopuler</div>
+            <div class="float-card-value">Irama Dasar</div>
+            <div class="float-card-label" style="margin-top:3px; color: var(--green); font-weight:600;">⭐ 4.9 · Pemula</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" id="scrollHint">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      Scroll untuk mulai
+    </div>
+  </section>
+
+  <!-- ========================
+       BERANDA / PREVIEW CARDS
+  ======================== -->
+  <section class="section-beranda" id="beranda">
+    <div class="beranda-inner">
+
+      <div class="beranda-top">
+        <div>
+          <span class="section-kicker">Mulai dari Mana Saja</span>
+          <h2 class="beranda-title">Gerak, Rasa, <em>Irama</em></h2>
+        </div>
+        <a href="modul.html" class="btn-outline">
+          Cek Semua Modul
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- Card 1 -->
+        <article class="card" onclick="location.href='modul.html'">
+          <div class="card-thumb green">
+            <span class="card-thumb-badge">🎀 Pita</span>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Modul 01 · Pemula</div>
+            <h3 class="card-title">Gerakan Dasar Senam Irama dengan Pita</h3>
+            <p class="card-desc">Pelajari teknik dasar mengayun, memutar, dan melempar pita sesuai irama musik.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-meta">5 Topik · 18 menit</span>
+            <div class="card-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card" onclick="location.href='modul.html'">
+          <div class="card-thumb peach">
+            <span class="card-thumb-badge">⭕ Simpai</span>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Modul 03 · Menengah</div>
+            <h3 class="card-title">Teknik Simpai & Koordinasi Tubuh</h3>
+            <p class="card-desc">Kuasai gerakan rolling, swinging, dan passing simpai sambil menjaga keselarasan irama.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-meta">6 Topik · 22 menit</span>
+            <div class="card-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card" onclick="location.href='modul.html'">
+          <div class="card-thumb purple">
+            <span class="card-thumb-badge">🎵 Musikalitas</span>
+          </div>
+          <div class="card-body">
+            <div class="card-tag">Modul 05 · Semua Level</div>
+            <h3 class="card-title">Musikalitas & Ekspresi dalam Senam Ritmik</h3>
+            <p class="card-desc">Pahami ketukan, tempo, dan cara mengekspresikan emosi melalui setiap gerakan tubuh.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-meta">6 Topik · 20 menit</span>
+            <div class="card-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       JAVASCRIPT
+  ======================== -->
+  <script>
+    // Hamburger toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = hamburgerBtn.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen);
+      mobileNav.setAttribute('aria-hidden', !isOpen);
+      mobileNav.classList.toggle('visible', isOpen);
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('visible');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburgerBtn.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('visible');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // CTA scroll unlock
+    const ctaBtn     = document.getElementById('ctaBtn');
+    const beranda    = document.getElementById('beranda');
+    const scrollHint = document.getElementById('scrollHint');
+
+    setTimeout(() => scrollHint.classList.add('visible'), 1800);
+
+    ctaBtn.addEventListener('click', () => {
+      document.body.classList.add('scrollable');
+      scrollHint.classList.remove('visible');
+      beranda.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => document.body.classList.add('scrollable'));
+    });
+  </script>
+
 </body>
 </html>
