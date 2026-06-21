@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Tambah Modul — Rythme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="admin-topbar">
+    <div class="admin-logo">
+      <div class="admin-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+        </svg>
+      </div>
+      Ryth<span class="accent">me</span>
+      <span class="admin-tag">ADMIN</span>
+    </div>
+    <div class="admin-topbar-right">
+      <a href="dashboard.html" class="btn-logout">← Kembali ke Dashboard</a>
+    </div>
+  </header>
+
+  <main class="admin-container" style="max-width: 800px;">
+
+    <div class="admin-page-header">
+      <div>
+        <h1 class="admin-page-title" id="formTitle">Tambah Modul Baru</h1>
+        <p class="admin-page-sub">Isi informasi modul, materi pembelajaran, dan kuis</p>
+      </div>
+    </div>
+
+    <form id="modulForm">
+
+      <!-- ============ SECTION: Info Dasar ============ -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="form-section-num">1</div>
+          Informasi Dasar Modul
+        </div>
+        <div class="form-section-desc">Judul, level, dan pengaturan tampilan modul</div>
+
+        <div class="form-row">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="moduleNumber">Nomor Modul</label>
+              <input type="number" id="moduleNumber" min="1" required placeholder="Contoh: 1">
+            </div>
+            <div class="form-group">
+              <label for="level">Level Kesulitan</label>
+              <select id="level" required>
+                <option value="pemula">🌱 Pemula</option>
+                <option value="menengah">⚡ Menengah</option>
+                <option value="lanjutan">🔥 Lanjutan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title">Judul Modul</label>
+            <input type="text" id="title" required placeholder="Contoh: Pengantar & Konsep Dasar Senam Irama">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="description">Deskripsi Singkat</label>
+            <textarea id="description" rows="3" placeholder="Deskripsi singkat yang akan tampil di kartu preview modul"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="durationMinutes">Estimasi Durasi (menit)</label>
+              <input type="number" id="durationMinutes" min="0" placeholder="Contoh: 20">
+            </div>
+            <div class="form-group">
+              <label for="sortOrder">Urutan Tampil (opsional)</label>
+              <input type="number" id="sortOrder" min="0" placeholder="Kosongkan jika tidak perlu">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="checkbox-row">
+            <input type="checkbox" id="isPublished" checked>
+            <label for="isPublished">Tampilkan modul ini di website (Published)</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="checkbox-row">
+            <input type="checkbox" id="showOnHomepage">
+            <label for="showOnHomepage">Tampilkan juga di halaman Beranda (index)</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ SECTION: Video YouTube ============ -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="form-section-num">2</div>
+          Video YouTube
+        </div>
+        <div class="form-section-desc">Thumbnail otomatis diambil dari video ini</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="youtubeUrl">Link Video YouTube</label>
+            <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+        </div>
+
+        <div class="yt-preview" id="ytPreview">
+          <img id="ytThumbnail" src="" alt="Preview thumbnail">
+          <div class="yt-preview-label">✓ Thumbnail terdeteksi otomatis</div>
+        </div>
+      </div>
+
+      <!-- ============ SECTION: Materi (dinamis) ============ -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="form-section-num">3</div>
+          Materi Pembelajaran
+        </div>
+        <div class="form-section-desc">Tambahkan section materi: judul, tag, isi, dan highlight (opsional)</div>
+
+        <div id="sectionsContainer"></div>
+
+        <button type="button" class="btn-add-block" onclick="addSection()">+ Tambah Section Materi</button>
+      </div>
+
+      <!-- ============ SECTION: Kuis (dinamis) ============ -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="form-section-num">4</div>
+          Soal Kuis
+        </div>
+        <div class="form-section-desc">Tambahkan soal pilihan ganda yang akan muncul setelah materi & video</div>
+
+        <div id="quizContainer"></div>
+
+        <button type="button" class="btn-add-block" onclick="addQuestion()">+ Tambah Soal Kuis</button>
+      </div>
+
+      <div class="form-actions">
+        <a href="dashboard.html" class="btn btn-outline">Batal</a>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Simpan Modul</button>
+      </div>
+
+    </form>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="admin.js"></script>
+  <script>
+    requireLogin();
+
+    let sectionCount = 0;
+    let questionCount = 0;
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('id');
+
+    // ===== Preview thumbnail YouTube otomatis =====
+    document.getElementById('youtubeUrl').addEventListener('input', (e) => {
+      const id = extractYoutubeId(e.target.value);
+      const preview = document.getElementById('ytPreview');
+      const img = document.getElementById('ytThumbnail');
+
+      if (id) {
+        img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        preview.classList.add('visible');
+      } else {
+        preview.classList.remove('visible');
+      }
+    });
+
+    // ===== Tambah blok Section Materi =====
+    function addSection(data = null) {
+      sectionCount++;
+      const id = sectionCount;
+      const div = document.createElement('div');
+      div.className = 'dynamic-block';
+      div.id = `section-${id}`;
+      div.innerHTML = `
+        <div class="dynamic-block-header">
+          <span class="dynamic-block-label">Section Materi #${id}</span>
+          <button type="button" class="btn-remove-block" onclick="removeBlock('section-${id}')">✕</button>
+        </div>
+        <div class="form-row">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Judul Section</label>
+              <input type="text" class="section-title" placeholder="Contoh: Apa Itu Senam Irama?" value="${data?.section_title ? escapeAttr(data.section_title) : ''}">
+            </div>
+            <div class="form-group">
+              <label>Tag (opsional)</label>
+              <input type="text" class="section-tag" placeholder="Contoh: Konsep Dasar" value="${data?.section_tag ? escapeAttr(data.section_tag) : ''}">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Isi Materi</label>
+            <textarea class="section-body" rows="4" placeholder="Tulis isi materi di sini...">${data?.section_body ? data.section_body : ''}</textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kotak Highlight / Kutipan (opsional)</label>
+            <textarea class="section-highlight" rows="2" placeholder="Fakta menarik atau kutipan penting (akan ditampilkan dalam kotak berwarna)">${data?.highlight_text ? data.highlight_text : ''}</textarea>
+          </div>
+        </div>
+      `;
+      document.getElementById('sectionsContainer').appendChild(div);
+    }
+
+    // ===== Tambah blok Soal Kuis =====
+    function addQuestion(data = null) {
+      questionCount++;
+      const id = questionCount;
+      const div = document.createElement('div');
+      div.className = 'dynamic-block';
+      div.id = `question-${id}`;
+      div.innerHTML = `
+        <div class="dynamic-block-header">
+          <span class="dynamic-block-label">Soal #${id}</span>
+          <button type="button" class="btn-remove-block" onclick="removeBlock('question-${id}')">✕</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pertanyaan</label>
+            <textarea class="q-text" rows="2" placeholder="Tulis pertanyaan di sini...">${data?.question_text ? data.question_text : ''}</textarea>
+          </div>
+        </div>
+        <div class="quiz-options-grid">
+          <div class="quiz-option-input">
+            <span class="quiz-option-letter">A</span>
+            <input type="text" class="q-opt-a" placeholder="Pilihan A" value="${data?.option_a ? escapeAttr(data.option_a) : ''}" style="flex:1;">
+          </div>
+          <div class="quiz-option-input">
+            <span class="quiz-option-letter">B</span>
+            <input type="text" class="q-opt-b" placeholder="Pilihan B" value="${data?.option_b ? escapeAttr(data.option_b) : ''}" style="flex:1;">
+          </div>
+          <div class="quiz-option-input">
+            <span class="quiz-option-letter">C</span>
+            <input type="text" class="q-opt-c" placeholder="Pilihan C" value="${data?.option_c ? escapeAttr(data.option_c) : ''}" style="flex:1;">
+          </div>
+          <div class="quiz-option-input">
+            <span class="quiz-option-letter">D</span>
+            <input type="text" class="q-opt-d" placeholder="Pilihan D" value="${data?.option_d ? escapeAttr(data.option_d) : ''}" style="flex:1;">
+          </div>
+        </div>
+        <div class="correct-answer-row">
+          <label>Jawaban Benar:</label>
+          <select class="q-correct">
+            <option value="A" ${data?.correct_option === 'A' ? 'selected' : ''}>A</option>
+            <option value="B" ${data?.correct_option === 'B' ? 'selected' : ''}>B</option>
+            <option value="C" ${data?.correct_option === 'C' ? 'selected' : ''}>C</option>
+            <option value="D" ${data?.correct_option === 'D' ? 'selected' : ''}>D</option>
+          </select>
+        </div>
+      `;
+      document.getElementById('quizContainer').appendChild(div);
+    }
+
+    function removeBlock(id) {
+      document.getElementById(id).remove();
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/"/g, '&quot;');
+    }
+
+    // ===== Kumpulkan semua data section & soal dari DOM =====
+    function collectSections() {
+      const blocks = document.querySelectorAll('#sectionsContainer .dynamic-block');
+      return Array.from(blocks).map(block => ({
+        title: block.querySelector('.section-title').value,
+        tag: block.querySelector('.section-tag').value,
+        body: block.querySelector('.section-body').value,
+        highlight: block.querySelector('.section-highlight').value || null,
+      })).filter(s => s.title || s.body); // skip yang kosong total
+    }
+
+    function collectQuestions() {
+      const blocks = document.querySelectorAll('#quizContainer .dynamic-block');
+      return Array.from(blocks).map(block => ({
+        question_text: block.querySelector('.q-text').value,
+        option_a: block.querySelector('.q-opt-a').value,
+        option_b: block.querySelector('.q-opt-b').value,
+        option_c: block.querySelector('.q-opt-c').value,
+        option_d: block.querySelector('.q-opt-d').value,
+        correct_option: block.querySelector('.q-correct').value,
+      })).filter(q => q.question_text); // skip yang kosong total
+    }
+
+    // ===== Mode Edit: load data modul yang sudah ada =====
+    async function loadExistingModule() {
+      document.getElementById('formTitle').textContent = 'Edit Modul';
+      document.getElementById('pageTitle').textContent = 'Edit Modul — Rythme';
+      document.getElementById('submitBtn').textContent = 'Update Modul';
+
+      try {
+        // Endpoint khusus admin: 1x panggil sudah dapat semua data termasuk draft & correct_option
+        const res = await apiFetch(`modules.php?id=${editId}&admin=1`);
+        if (!res) return;
+
+        if (!res.ok) {
+          showToast('Modul tidak ditemukan', 'error');
+          return;
+        }
+
+        const m = await res.json();
+
+        document.getElementById('moduleNumber').value = m.module_number;
+        document.getElementById('level').value = m.level;
+        document.getElementById('title').value = m.title;
+        document.getElementById('description').value = m.description || '';
+        document.getElementById('durationMinutes').value = m.duration_minutes || '';
+        document.getElementById('sortOrder').value = m.sort_order || '';
+        document.getElementById('isPublished').checked = m.is_published == 1;
+        document.getElementById('showOnHomepage').checked = m.show_on_homepage == 1;
+        document.getElementById('youtubeUrl').value = m.youtube_url || '';
+
+        if (m.thumbnail_url) {
+          document.getElementById('ytThumbnail').src = m.thumbnail_url;
+          document.getElementById('ytPreview').classList.add('visible');
+        }
+
+        if (m.sections && m.sections.length > 0) {
+          m.sections.forEach(s => addSection({
+            section_title: s.section_title,
+            section_tag: s.section_tag,
+            section_body: s.section_body,
+            highlight_text: s.highlight_text,
+          }));
+        }
+
+        if (m.quiz_questions && m.quiz_questions.length > 0) {
+          m.quiz_questions.forEach(q => addQuestion({
+            question_text: q.question_text,
+            option_a: q.option_a,
+            option_b: q.option_b,
+            option_c: q.option_c,
+            option_d: q.option_d,
+            correct_option: q.correct_option,
+          }));
+        }
+
+      } catch (err) {
+        showToast('Gagal memuat data modul: ' + err.message, 'error');
+      }
+    }
+
+    // ===== Submit form (tambah / edit) =====
+    document.getElementById('modulForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Menyimpan...';
+
+      const payload = {
+        module_number: parseInt(document.getElementById('moduleNumber').value),
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        level: document.getElementById('level').value,
+        youtube_url: document.getElementById('youtubeUrl').value,
+        duration_minutes: parseInt(document.getElementById('durationMinutes').value) || 0,
+        is_published: document.getElementById('isPublished').checked ? 1 : 0,
+        show_on_homepage: document.getElementById('showOnHomepage').checked ? 1 : 0,
+        sort_order: parseInt(document.getElementById('sortOrder').value) || 0,
+        sections: collectSections(),
+        quiz_questions: collectQuestions(),
+      };
+
+      try {
+        let res;
+        if (editId) {
+          res = await apiFetch(`modules.php?id=${editId}`, {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+          });
+        } else {
+          res = await apiFetch('modules.php', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+          });
+        }
+
+        if (!res) return;
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Gagal menyimpan modul');
+
+        showToast(editId ? 'Modul berhasil diperbarui!' : 'Modul berhasil ditambahkan!', 'success');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+
+      } catch (err) {
+        showToast(err.message, 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = editId ? 'Update Modul' : 'Simpan Modul';
+      }
+    });
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast visible ${type}`;
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    // ===== Init =====
+    if (editId) {
+      loadExistingModule();
+    } else {
+      // Modul baru: mulai dengan 1 section dan 1 soal kosong supaya tidak bingung
+      addSection();
+      addQuestion();
+    }
+  </script>
+
+</body>
+</html>

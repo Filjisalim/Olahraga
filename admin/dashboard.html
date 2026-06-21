@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin — Rythme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="admin-topbar">
+    <div class="admin-logo">
+      <div class="admin-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+        </svg>
+      </div>
+      Ryth<span class="accent">me</span>
+      <span class="admin-tag">ADMIN</span>
+    </div>
+    <div class="admin-topbar-right">
+      <span class="admin-username" id="adminUsername">—</span>
+      <button class="btn-logout" onclick="adminLogout()">Keluar</button>
+    </div>
+  </header>
+
+  <main class="admin-container">
+
+    <div class="admin-page-header">
+      <div>
+        <h1 class="admin-page-title">Dashboard Modul</h1>
+        <p class="admin-page-sub">Kelola materi, video, dan kuis pembelajaran</p>
+      </div>
+      <a href="form-modul.html" class="btn btn-primary">+ Tambah Modul Baru</a>
+    </div>
+
+    <!-- Stats -->
+    <div class="admin-stats-row">
+      <div class="admin-stat-card">
+        <div class="admin-stat-num" id="statTotal">—</div>
+        <div class="admin-stat-label">Total Modul</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-num" id="statPublished">—</div>
+        <div class="admin-stat-label">Published</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-num" id="statHomepage">—</div>
+        <div class="admin-stat-label">Tampil di Beranda</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-num" id="statResults">—</div>
+        <div class="admin-stat-label">Total Pengerjaan Kuis</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-tab="modul" onclick="switchTab('modul')">Daftar Modul</div>
+      <div class="admin-tab" data-tab="hasil" onclick="switchTab('hasil')">Hasil Kuis</div>
+    </div>
+
+    <!-- TAB: Daftar Modul -->
+    <div id="tabModul">
+      <div class="admin-module-grid" id="moduleList">
+        <div class="admin-loading">Memuat data modul...</div>
+      </div>
+    </div>
+
+    <!-- TAB: Hasil Kuis -->
+    <div id="tabHasil" style="display:none;">
+      <div class="form-row" style="margin-bottom: 20px; max-width: 320px;">
+        <label style="font-size:0.82rem; font-weight:700; margin-bottom:6px; display:block;">Filter berdasarkan modul</label>
+        <select id="filterModul" class="form-group" style="width:100%; padding: 10px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:0.88rem;">
+          <option value="">Semua Modul</option>
+        </select>
+      </div>
+      <div id="resultsWrap">
+        <div class="admin-loading">Memuat hasil kuis...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal konfirmasi hapus -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+      <div class="modal-icon">🗑️</div>
+      <div class="modal-title">Hapus modul ini?</div>
+      <p class="modal-desc">Semua materi, video, soal kuis, dan hasil kuis yang terkait modul ini akan ikut terhapus permanen. Tindakan ini tidak bisa dibatalkan.</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">Batal</button>
+        <button class="btn" style="background: var(--red); color:white;" id="confirmDeleteBtn">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="admin.js"></script>
+  <script>
+    requireLogin();
+    document.getElementById('adminUsername').textContent = localStorage.getItem('admin_username') || 'Admin';
+
+    let allModules = [];
+    let allResults = [];
+    let moduleToDelete = null;
+
+    // ===== Load data saat halaman dibuka =====
+    async function loadModules() {
+      try {
+        const res = await apiFetch('modules.php?admin=1');
+        if (!res) return;
+        allModules = await res.json();
+        renderModules();
+        renderStats();
+        populateFilterDropdown();
+      } catch (err) {
+        document.getElementById('moduleList').innerHTML = `<div class="admin-empty">Gagal memuat data: ${err.message}</div>`;
+      }
+    }
+
+    function renderStats() {
+      document.getElementById('statTotal').textContent = allModules.length;
+      document.getElementById('statPublished').textContent = allModules.filter(m => m.is_published == 1).length;
+      document.getElementById('statHomepage').textContent = allModules.filter(m => m.show_on_homepage == 1).length;
+      document.getElementById('statResults').textContent = allResults.length || '0';
+    }
+
+    function renderModules() {
+      const wrap = document.getElementById('moduleList');
+
+      if (allModules.length === 0) {
+        wrap.innerHTML = `
+          <div class="admin-empty">
+            <div class="admin-empty-icon">📚</div>
+            <p>Belum ada modul. Klik "Tambah Modul Baru" untuk mulai.</p>
+          </div>`;
+        return;
+      }
+
+      wrap.innerHTML = allModules.map(m => `
+        <div class="admin-module-row">
+          <div class="admin-module-thumb ${!m.thumbnail_url ? 'no-video' : ''}"
+               style="${m.thumbnail_url ? `background-image:url('${m.thumbnail_url}')` : ''}">
+            ${!m.thumbnail_url ? 'Tanpa video' : ''}
+          </div>
+          <div class="admin-module-info">
+            <div class="admin-module-title-row">
+              <span class="admin-module-num">Modul ${String(m.module_number).padStart(2,'0')}</span>
+            </div>
+            <div class="admin-module-title">${escapeHtml(m.title)}</div>
+            <div class="admin-module-meta" style="margin-top:6px;">
+              <span class="badge badge-${m.level}">${capitalize(m.level)}</span>
+              <span class="badge badge-${m.is_published == 1 ? 'published' : 'draft'}">${m.is_published == 1 ? 'Published' : 'Draft'}</span>
+              ${m.show_on_homepage == 1 ? '<span class="badge badge-homepage">Di Beranda</span>' : ''}
+            </div>
+          </div>
+          <div class="admin-module-actions">
+            <a href="form-modul.html?id=${m.id}" class="icon-btn" title="Edit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+            </a>
+            <button class="icon-btn danger" title="Hapus" onclick="openDeleteModal(${m.id}, '${escapeHtml(m.title).replace(/'/g, "\\'")}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // ===== Hapus modul =====
+    function openDeleteModal(id, title) {
+      moduleToDelete = id;
+      document.getElementById('deleteModal').classList.add('visible');
+    }
+
+    function closeDeleteModal() {
+      moduleToDelete = null;
+      document.getElementById('deleteModal').classList.remove('visible');
+    }
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+      if (!moduleToDelete) return;
+
+      try {
+        const res = await apiFetch(`modules.php?id=${moduleToDelete}`, { method: 'DELETE' });
+        if (!res) return;
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Gagal menghapus modul');
+
+        showToast('Modul berhasil dihapus', 'success');
+        closeDeleteModal();
+        loadModules();
+
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // ===== Tabs =====
+    function switchTab(tab) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.admin-tab[data-tab="${tab}"]`).classList.add('active');
+
+      document.getElementById('tabModul').style.display = tab === 'modul' ? 'block' : 'none';
+      document.getElementById('tabHasil').style.display = tab === 'hasil' ? 'block' : 'none';
+
+      if (tab === 'hasil' && allResults.length === 0) {
+        loadResults();
+      }
+    }
+
+    // ===== Hasil kuis =====
+    async function loadResults() {
+      try {
+        const res = await apiFetch('kuis.php?all=1');
+        if (!res) return;
+        allResults = await res.json();
+        renderResults(allResults);
+        renderStats();
+      } catch (err) {
+        document.getElementById('resultsWrap').innerHTML = `<div class="admin-empty">Gagal memuat hasil: ${err.message}</div>`;
+      }
+    }
+
+    function populateFilterDropdown() {
+      const select = document.getElementById('filterModul');
+      allModules.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = `Modul ${String(m.module_number).padStart(2,'0')} — ${m.title}`;
+        select.appendChild(opt);
+      });
+    }
+
+    document.getElementById('filterModul').addEventListener('change', (e) => {
+      const moduleId = e.target.value;
+      const filtered = moduleId ? allResults.filter(r => r.module_id == moduleId) : allResults;
+      renderResults(filtered);
+    });
+
+    function renderResults(results) {
+      const wrap = document.getElementById('resultsWrap');
+
+      if (results.length === 0) {
+        wrap.innerHTML = `
+          <div class="admin-empty">
+            <div class="admin-empty-icon">📝</div>
+            <p>Belum ada user yang mengerjakan kuis.</p>
+          </div>`;
+        return;
+      }
+
+      wrap.innerHTML = `
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Modul</th>
+              <th>Skor</th>
+              <th>Waktu Pengerjaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${results.map(r => {
+              const pct = (r.score / r.total_questions) * 100;
+              const scoreClass = pct >= 80 ? 'score-high' : pct >= 50 ? 'score-mid' : 'score-low';
+              return `
+                <tr>
+                  <td><strong>${escapeHtml(r.user_name)}</strong></td>
+                  <td>Modul ${String(r.module_number || '').padStart(2,'0')} — ${escapeHtml(r.module_title)}</td>
+                  <td><span class="score-pill ${scoreClass}">${r.score} / ${r.total_questions}</span></td>
+                  <td>${formatTanggal(r.submitted_at)}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // ===== Toast =====
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast visible ${type}`;
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    // Init
+    loadModules();
+  </script>
+
+</body>
+</html>

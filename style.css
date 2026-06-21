@@ -1,4 +1,3 @@
-
 /* =====================
    TOKENS
 ===================== */
@@ -772,4 +771,255 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
-CSSEOF
+
+/* =====================
+   SECTION: TENTANG KAMI
+===================== */
+.section-tentang {
+  padding: 90px 40px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.tentang-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tentang-badge {
+  display: inline-block;
+  background: var(--peach-l);
+  color: var(--peach-d);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 18px;
+}
+
+.tentang-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.tentang-lead {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+
+.tentang-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: left;
+}
+
+.tentang-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+}
+
+.tentang-card-icon {
+  width: 52px; height: 52px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+.tentang-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.tentang-card-desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* =====================
+   SECTION: BANTUAN / FAQ
+===================== */
+.section-bantuan {
+  padding: 90px 40px;
+  background: linear-gradient(160deg, #F5F0FB 0%, #EEF6F2 50%, #FEF4EE 100%);
+  border-top: 1px solid var(--border);
+}
+
+.bantuan-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bantuan-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.bantuan-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 10px 0 12px;
+}
+
+.bantuan-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.faq-item.open {
+  border-color: var(--green);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: background 0.2s, color 0.2s, transform 0.25s;
+}
+
+.faq-item.open .faq-icon {
+  background: var(--green);
+  color: var(--white);
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 220px;
+  padding: 0 22px 20px;
+}
+
+.faq-answer p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* =====================
+   FOOTER
+===================== */
+.site-footer {
+  background: var(--text);
+  padding: 56px 40px 28px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.footer-brand .nav-logo {
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.footer-brand .nav-logo .accent { color: #8FCBA8; }
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+}
+
+/* =====================
+   RESPONSIVE: ADDITIONAL SECTIONS
+===================== */
+@media (max-width: 900px) {
+  .tentang-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .section-tentang, .section-bantuan { padding: 56px 20px; }
+  .site-footer { padding: 40px 20px 24px; }
+  .footer-inner { flex-direction: column; }
+  .faq-question { padding: 16px 18px; font-size: 0.88rem; }
+}

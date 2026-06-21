@@ -29,7 +29,7 @@
       <a href="modul.html">Modul Pembelajaran</a>
       <a href="#bantuan">Bantuan</a>
       <a href="#tentang">Tentang Kami</a>
-      <a href="#kontak" class="nav-cta">Mulai Belajar</a>
+      <a href="modul.html" class="nav-cta">Mulai Belajar</a>
     </nav>
 
     <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
@@ -45,7 +45,7 @@
     <a href="modul.html">Modul Pembelajaran</a>
     <a href="#bantuan">Bantuan</a>
     <a href="#tentang">Tentang Kami</a>
-    <a href="#kontak" class="mob-cta">Mulai Belajar</a>
+    <a href="modul.html" class="mob-cta">Mulai Belajar</a>
   </nav>
 
   <!-- ========================
@@ -101,7 +101,7 @@
 
         <div class="stat-row">
           <div class="stat">
-            <div class="stat-num">12+</div>
+            <div class="stat-num" id="statModulCount">—</div>
             <div class="stat-label">Modul Tersedia</div>
           </div>
           <div class="stat-divider"></div>
@@ -219,71 +219,145 @@
         </a>
       </div>
 
-      <div class="card-grid">
+      <div class="card-grid" id="cardGrid">
+        <div class="admin-loading" style="grid-column: 1 / -1; text-align:center; padding:60px 0; color:var(--muted);">Memuat modul...</div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Card 1 -->
-        <article class="card" onclick="location.href='modul.html'">
-          <div class="card-thumb green">
-            <span class="card-thumb-badge">🎀 Pita</span>
-          </div>
-          <div class="card-body">
-            <div class="card-tag">Modul 01 · Pemula</div>
-            <h3 class="card-title">Gerakan Dasar Senam Irama dengan Pita</h3>
-            <p class="card-desc">Pelajari teknik dasar mengayun, memutar, dan melempar pita sesuai irama musik.</p>
-          </div>
-          <div class="card-footer">
-            <span class="card-meta">5 Topik · 18 menit</span>
-            <div class="card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </div>
-          </div>
-        </article>
+  <!-- ========================
+       TENTANG KAMI
+  ======================== -->
+  <section class="section-tentang" id="tentang">
+    <div class="tentang-inner">
+      <div class="tentang-badge">Tentang Rythme</div>
+      <h2 class="tentang-title">Senam Irama, Untuk Siapa Saja</h2>
+      <p class="tentang-lead">
+        Rythme lahir dari satu keyakinan sederhana: belajar senam irama tidak harus dimulai dari sanggar mahal atau pelatih pribadi. Siapa pun — pelajar yang baru penasaran, atau orang tua yang ingin tetap aktif — berhak punya akses ke materi yang jelas, terstruktur, dan menyenangkan untuk diikuti dari rumah.
+      </p>
 
-        <!-- Card 2 -->
-        <article class="card" onclick="location.href='modul.html'">
-          <div class="card-thumb peach">
-            <span class="card-thumb-badge">⭕ Simpai</span>
-          </div>
-          <div class="card-body">
-            <div class="card-tag">Modul 03 · Menengah</div>
-            <h3 class="card-title">Teknik Simpai & Koordinasi Tubuh</h3>
-            <p class="card-desc">Kuasai gerakan rolling, swinging, dan passing simpai sambil menjaga keselarasan irama.</p>
-          </div>
-          <div class="card-footer">
-            <span class="card-meta">6 Topik · 22 menit</span>
-            <div class="card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </div>
-          </div>
-        </article>
+      <div class="tentang-grid">
+        <div class="tentang-card">
+          <div class="tentang-card-icon">🎯</div>
+          <h3 class="tentang-card-title">Misi Kami</h3>
+          <p class="tentang-card-desc">Membuat pembelajaran senam irama bisa diakses siapa saja, kapan saja — tanpa perlu peralatan mahal atau jadwal yang kaku.</p>
+        </div>
+        <div class="tentang-card">
+          <div class="tentang-card-icon">📚</div>
+          <h3 class="tentang-card-title">Cara Belajar</h3>
+          <p class="tentang-card-desc">Setiap modul memadukan materi teks terstruktur, video demonstrasi, dan kuis singkat untuk menguji pemahamanmu.</p>
+        </div>
+        <div class="tentang-card">
+          <div class="tentang-card-icon">🌱</div>
+          <h3 class="tentang-card-title">Untuk Semua Level</h3>
+          <p class="tentang-card-desc">Dari yang baru mulai sampai yang ingin memperdalam teknik — modul kami terbagi jelas: Pemula, Menengah, dan Lanjutan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Card 3 -->
-        <article class="card" onclick="location.href='modul.html'">
-          <div class="card-thumb purple">
-            <span class="card-thumb-badge">🎵 Musikalitas</span>
+  <!-- ========================
+       BANTUAN / FAQ
+  ======================== -->
+  <section class="section-bantuan" id="bantuan">
+    <div class="bantuan-inner">
+      <div class="bantuan-header">
+        <span class="section-kicker">Punya Pertanyaan?</span>
+        <h2 class="bantuan-title">Bantuan & Pertanyaan Umum</h2>
+        <p class="bantuan-sub">Hal-hal yang paling sering ditanyakan seputar belajar di Rythme</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Bagaimana cara mulai belajar di Rythme?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Klik tombol "Mulai Belajar Sekarang" di halaman utama, lalu pilih modul yang ingin kamu pelajari di halaman Modul Pembelajaran. Setiap modul berisi materi teks, video, dan kuis yang bisa kamu ikuti secara berurutan.</p>
           </div>
-          <div class="card-body">
-            <div class="card-tag">Modul 05 · Semua Level</div>
-            <h3 class="card-title">Musikalitas & Ekspresi dalam Senam Ritmik</h3>
-            <p class="card-desc">Pahami ketukan, tempo, dan cara mengekspresikan emosi melalui setiap gerakan tubuh.</p>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Apakah saya harus menyelesaikan modul secara berurutan?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Tidak harus. Kamu bebas memilih modul mana saja sesuai level dan minatmu — gunakan filter Pemula, Menengah, atau Lanjutan di halaman Modul Pembelajaran untuk mempermudah pencarian.</p>
           </div>
-          <div class="card-footer">
-            <span class="card-meta">6 Topik · 20 menit</span>
-            <div class="card-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Bagaimana cara kerja kuis di setiap modul?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Setelah membaca materi dan menonton video, gulir ke bagian Kuis Pemahaman. Kamu akan diminta mengisi nama terlebih dahulu, lalu menjawab beberapa soal pilihan ganda. Hasilnya akan langsung muncul setelah kamu menyelesaikan semua soal.</p>
           </div>
-        </article>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Apakah saya bisa mengulang kuis jika nilainya kurang memuaskan?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Tentu bisa. Setelah melihat hasil kuis, klik tombol "Ulangi Kuis" untuk mencoba lagi sebanyak yang kamu mau.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Apakah Rythme berbayar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Tidak. Seluruh modul, video, dan kuis di Rythme dapat diakses sepenuhnya gratis.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Saya menemukan kendala teknis, harus bagaimana?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Coba muat ulang halaman terlebih dahulu. Jika kendala masih berlanjut, kamu bisa menghubungi tim kami melalui kontak yang tertera di bagian bawah halaman ini.</p>
+          </div>
+        </div>
 
       </div>
     </div>
   </section>
+
+  <!-- ========================
+       FOOTER
+  ======================== -->
+  <footer class="site-footer" id="kontak">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+              <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+            </svg>
+          </div>
+          Ryth<span class="accent">me</span>
+        </div>
+        <p class="footer-tagline">Belajar senam irama, dari dasar hingga mahir.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Beranda</a>
+        <a href="modul.html">Modul Pembelajaran</a>
+        <a href="#bantuan">Bantuan</a>
+        <a href="#tentang">Tentang Kami</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Rythme. Dibuat untuk siapa saja yang ingin belajar gerak dan irama.</div>
+  </footer>
 
   <!-- ========================
        JAVASCRIPT
@@ -334,6 +408,101 @@
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', () => document.body.classList.add('scrollable'));
     });
+
+    // ===== Ambil 3 modul untuk ditampilkan di beranda =====
+    const API_BASE = 'http://localhost/rythme/backend/api/';
+    // Saat sudah di hosting, ganti jadi: const API_BASE = 'https://namadomainmu.com/backend/api/';
+
+    const levelEmoji = { pemula: '🌱', menengah: '⚡', lanjutan: '🔥' };
+    const thumbColors = ['green', 'peach', 'purple'];
+
+    async function loadHomepageModules() {
+      const grid = document.getElementById('cardGrid');
+
+      try {
+        // Ambil 3 modul pilihan untuk kartu preview
+        const res = await fetch(API_BASE + 'modules.php?homepage=1');
+        const modules = await res.json();
+
+        // Ambil SEMUA modul published untuk menghitung total (dipakai di angka "Modul Tersedia")
+        const resAll = await fetch(API_BASE + 'modules.php');
+        const allModules = await resAll.json();
+        document.getElementById('statModulCount').textContent = allModules.length + '+';
+
+        if (!modules || modules.length === 0) {
+          grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">Belum ada modul yang ditampilkan di beranda.</p>`;
+          return;
+        }
+
+        grid.innerHTML = modules.map((m, i) => {
+          const color = thumbColors[i % thumbColors.length];
+          const thumbStyle = m.thumbnail_url ? `background-image:url('${m.thumbnail_url}'); background-size:cover; background-position:center;` : '';
+
+          return `
+            <article class="card" onclick="location.href='detail-modul.html?id=${m.id}'">
+              <div class="card-thumb ${color}" style="${thumbStyle}">
+                <span class="card-thumb-badge">${levelEmoji[m.level] || ''} ${capitalize(m.level)}</span>
+              </div>
+              <div class="card-body">
+                <div class="card-tag">Modul ${String(m.module_number).padStart(2,'0')} · ${capitalize(m.level)}</div>
+                <h3 class="card-title">${escapeHtml(m.title)}</h3>
+                <p class="card-desc">${escapeHtml(m.description || '')}</p>
+              </div>
+              <div class="card-footer">
+                <span class="card-meta">${m.duration_minutes || 0} menit</span>
+                <div class="card-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+      } catch (err) {
+        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">Gagal memuat modul. Pastikan server backend aktif.</p>`;
+        document.getElementById('statModulCount').textContent = '—';
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function capitalize(str) {
+      return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+    }
+
+    // ===== FAQ accordion =====
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+
+      // Tutup semua item lain (accordion style: hanya 1 terbuka)
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+      if (!wasOpen) {
+        item.classList.add('open');
+      }
+    }
+
+    loadHomepageModules();
+
+    // ===== Jika halaman dibuka dengan hash di URL (mis. dari modul.html#bantuan) =====
+    // Scroll otomatis terkunci secara default, jadi perlu dibuka dulu sebelum bisa scroll ke section tujuan
+    if (window.location.hash) {
+      document.body.classList.add('scrollable');
+      scrollHint.classList.remove('visible');
+
+      // Beri jeda singkat supaya konten (terutama kartu modul dari API) sempat ter-render dulu
+      setTimeout(() => {
+        const target = document.querySelector(window.location.hash);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
   </script>
 
 </body>

@@ -851,6 +851,15 @@ body.page-detail {
   background: var(--green-l);
 }
 
+.option-item.selected {
+  border-color: var(--peach);
+  background: var(--peach-l);
+  color: var(--peach-d);
+  font-weight: 600;
+}
+
+.option-item.selected .opt-letter { color: var(--peach-d); border-color: var(--peach); }
+
 .option-item.correct {
   border-color: var(--green);
   background: var(--green-l);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modul 01 — Pengantar Senam Irama · Rythme</title>
+  <title id="pageTitle">Memuat Modul... — Rythme</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,9 +26,9 @@
     <nav class="nav-links">
       <a href="index.html">Beranda</a>
       <a href="modul.html" class="active">Modul Pembelajaran</a>
-      <a href="#bantuan">Bantuan</a>
-      <a href="#tentang">Tentang Kami</a>
-      <a href="#kontak" class="nav-cta">Mulai Belajar</a>
+      <a href="index.html#bantuan">Bantuan</a>
+      <a href="index.html#tentang">Tentang Kami</a>
+      <a href="modul.html" class="nav-cta">Mulai Belajar</a>
     </nav>
 
     <button class="hamburger" id="hamburgerBtn" aria-label="Buka menu navigasi" aria-expanded="false">
@@ -41,9 +41,9 @@
   <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
     <a href="index.html">Beranda</a>
     <a href="modul.html">Modul Pembelajaran</a>
-    <a href="#bantuan">Bantuan</a>
-    <a href="#tentang">Tentang Kami</a>
-    <a href="#kontak" class="mob-cta">Mulai Belajar</a>
+    <a href="index.html#bantuan">Bantuan</a>
+    <a href="index.html#tentang">Tentang Kami</a>
+    <a href="modul.html" class="mob-cta">Mulai Belajar</a>
   </nav>
 
   <main class="detail-page">
@@ -55,30 +55,41 @@
         <svg class="breadcrumb-sep" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <a href="modul.html" class="breadcrumb-link">Modul Pembelajaran</a>
         <svg class="breadcrumb-sep" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="breadcrumb-current">Modul 01</span>
+        <span class="breadcrumb-current" id="breadcrumbCurrent">Memuat...</span>
       </div>
     </div>
 
-    <div class="detail-layout">
+    <!-- Loading state -->
+    <div id="loadingState" style="text-align:center; padding:100px 20px; color:var(--muted);">
+      Memuat modul...
+    </div>
+
+    <!-- Error state -->
+    <div id="errorState" style="display:none; text-align:center; padding:100px 20px; color:var(--muted);">
+      <p style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Modul tidak ditemukan</p>
+      <p style="margin-bottom:20px;">Modul yang kamu cari mungkin sudah dihapus atau belum dipublikasikan.</p>
+      <a href="modul.html" class="btn btn-outline" style="display:inline-flex; align-items:center; gap:8px; background:white; border:1.5px solid var(--border); color:var(--text); font-weight:700; padding:11px 22px; border-radius:99px; text-decoration:none;">← Kembali ke Daftar Modul</a>
+    </div>
+
+    <!-- Main content (diisi via JS setelah data dimuat) -->
+    <div class="detail-layout" id="detailLayout" style="display:none;">
 
       <!-- ========================
            SIDEBAR (sticky)
       ======================== -->
       <aside class="detail-sidebar">
 
-        <!-- Module info card -->
         <div class="sidebar-card">
-          <div class="sidebar-module-thumb thumb-green">
+          <div class="sidebar-module-thumb thumb-green" id="sidebarThumb">
             <span class="sidebar-thumb-icon">🎀</span>
           </div>
           <div class="sidebar-module-info">
-            <div class="sidebar-module-num">Modul 01 / 12</div>
-            <div class="sidebar-module-title">Pengantar & Konsep Dasar Senam Irama</div>
-            <div class="sidebar-badge">🌱 Pemula</div>
+            <div class="sidebar-module-num" id="sidebarNum">Modul</div>
+            <div class="sidebar-module-title" id="sidebarTitle">—</div>
+            <div class="sidebar-badge" id="sidebarBadge">—</div>
           </div>
         </div>
 
-        <!-- Progress -->
         <div class="sidebar-card">
           <div class="sidebar-card-label">Progress Modul</div>
           <div class="progress-track">
@@ -90,7 +101,6 @@
           </div>
         </div>
 
-        <!-- Chapter nav -->
         <div class="sidebar-card">
           <div class="sidebar-card-label">Isi Modul</div>
           <nav class="chapter-nav">
@@ -98,7 +108,7 @@
               <div class="chapter-link-icon">📖</div>
               <div>
                 <div class="chapter-link-title">Materi Teori</div>
-                <div class="chapter-link-sub">3 sub-topik</div>
+                <div class="chapter-link-sub" id="subMateriCount">— sub-topik</div>
               </div>
               <div class="chapter-check" id="checkMateri"></div>
             </a>
@@ -106,7 +116,7 @@
               <div class="chapter-link-icon">🎬</div>
               <div>
                 <div class="chapter-link-title">Video Pembelajaran</div>
-                <div class="chapter-link-sub">12 menit</div>
+                <div class="chapter-link-sub" id="subVideoDuration">— menit</div>
               </div>
               <div class="chapter-check" id="checkVideo"></div>
             </a>
@@ -114,21 +124,12 @@
               <div class="chapter-link-icon">✏️</div>
               <div>
                 <div class="chapter-link-title">Kuis Pemahaman</div>
-                <div class="chapter-link-sub">5 soal</div>
+                <div class="chapter-link-sub" id="subKuisCount">— soal</div>
               </div>
               <div class="chapter-check" id="checkKuis"></div>
             </a>
           </nav>
         </div>
-
-        <!-- Next module -->
-        <a href="detail-modul.html" class="sidebar-next-card">
-          <div class="sidebar-next-label">Modul Berikutnya</div>
-          <div class="sidebar-next-title">Modul 02 — Musikalitas & Kepekaan Irama</div>
-          <div class="sidebar-next-arrow">
-            Lanjut →
-          </div>
-        </a>
 
       </aside>
 
@@ -140,11 +141,11 @@
         <!-- MODULE HEADER -->
         <div class="module-header-card">
           <div class="module-header-top">
-            <span class="module-level-badge">🌱 Pemula</span>
-            <span class="module-num-tag">MODUL 01 / 12</span>
+            <span class="module-level-badge" id="headerLevelBadge">—</span>
+            <span class="module-num-tag" id="headerNumTag">—</span>
           </div>
-          <h1 class="module-title">Pengantar & Konsep Dasar Senam Irama</h1>
-          <p class="module-desc">Sebelum kamu memegang pita atau simpai, pahami dulu fondasi utama — apa itu senam irama, sejarahnya, manfaatnya, dan mengapa musikalitas adalah kunci segalanya.</p>
+          <h1 class="module-title" id="headerTitle">—</h1>
+          <p class="module-desc" id="headerDesc">—</p>
           <div class="module-meta-row">
             <div class="module-meta-item">
               <div class="module-meta-icon">📖</div>
@@ -152,11 +153,11 @@
             </div>
             <div class="module-meta-item">
               <div class="module-meta-icon">🎬</div>
-              <span>1 Video (12 menit)</span>
+              <span id="headerVideoMeta">Video</span>
             </div>
             <div class="module-meta-item">
               <div class="module-meta-icon">✏️</div>
-              <span>5 Soal Kuis</span>
+              <span id="headerQuizMeta">Soal Kuis</span>
             </div>
           </div>
         </div>
@@ -170,93 +171,7 @@
           <h2 class="section-title">Materi Teori</h2>
         </div>
 
-        <!-- Theory block 1 -->
-        <div class="theory-card">
-          <div class="theory-card-header">
-            <span class="theory-card-title">1.1 — Apa Itu Senam Irama?</span>
-            <span class="theory-tag">Konsep Dasar</span>
-          </div>
-          <div class="theory-card-body">
-            <p>Senam irama (rhythmic gymnastics) adalah cabang olahraga yang memadukan gerakan senam dengan seni pertunjukan, musik, dan tari. Berbeda dengan senam artistik yang berfokus pada kekuatan dan akrobatik, senam irama menekankan keindahan gerak, kelenturan, dan keselarasan dengan irama musik.</p>
-            <div class="theory-highlight">
-              <div class="theory-highlight-icon">💡</div>
-              <p>Senam irama pertama kali dipertandingkan di Olimpiade pada tahun 1984 di Los Angeles. Hingga kini, cabang ini menjadi salah satu olahraga paling artistik di dunia dengan jutaan peminat dari berbagai usia.</p>
-            </div>
-            <p>Di Indonesia, senam irama juga masuk ke dalam kurikulum pendidikan jasmani sebagai bagian penting dari pengembangan motorik, kreativitas, dan kepercayaan diri siswa.</p>
-          </div>
-        </div>
-
-        <!-- Theory block 2 -->
-        <div class="theory-card">
-          <div class="theory-card-header">
-            <span class="theory-card-title">1.2 — Manfaat Senam Irama</span>
-            <span class="theory-tag">Praktis</span>
-          </div>
-          <div class="theory-card-body">
-            <p>Latihan senam irama secara rutin memberikan manfaat yang luas, baik secara fisik maupun mental:</p>
-            <ul class="theory-list">
-              <li>
-                <div class="theory-list-icon">🤸</div>
-                <div><strong>Kelenturan & Koordinasi</strong> — melatih rentang gerak sendi dan koordinasi tangan-kaki-mata secara bersamaan</div>
-              </li>
-              <li>
-                <div class="theory-list-icon">🎵</div>
-                <div><strong>Musikalitas</strong> — mengembangkan kepekaan terhadap ritme, tempo, dan ekspresi musikal</div>
-              </li>
-              <li>
-                <div class="theory-list-icon">💪</div>
-                <div><strong>Kekuatan Inti</strong> — memperkuat otot perut, punggung, dan pinggul melalui gerakan kontrol</div>
-              </li>
-              <li>
-                <div class="theory-list-icon">🧠</div>
-                <div><strong>Konsentrasi</strong> — meningkatkan fokus karena harus memproses gerak dan musik sekaligus</div>
-              </li>
-              <li>
-                <div class="theory-list-icon">✨</div>
-                <div><strong>Kepercayaan Diri</strong> — tampil di depan orang lain membangun rasa percaya diri yang kuat</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Theory block 3 -->
-        <div class="theory-card">
-          <div class="theory-card-header">
-            <span class="theory-card-title">1.3 — Alat-alat dalam Senam Irama</span>
-            <span class="theory-tag">Pengenalan</span>
-          </div>
-          <div class="theory-card-body">
-            <p>Senam irama menggunakan berbagai alat tangan yang masing-masing memiliki karakteristik unik. Setiap alat menuntut teknik dan keterampilan yang berbeda:</p>
-
-            <div class="tool-grid">
-              <div class="tool-card">
-                <div class="tool-icon">🎀</div>
-                <div class="tool-name">Pita</div>
-                <div class="tool-desc">Pita sepanjang 6m yang diayun, diputar, dan dilempar mengikuti irama</div>
-              </div>
-              <div class="tool-card">
-                <div class="tool-icon">⭕</div>
-                <div class="tool-name">Simpai</div>
-                <div class="tool-desc">Lingkaran plastik yang diputar di tubuh atau dilempar ke udara</div>
-              </div>
-              <div class="tool-card">
-                <div class="tool-icon">🏐</div>
-                <div class="tool-name">Bola</div>
-                <div class="tool-desc">Bola karet yang digulir, dilambung, dan ditangkap dengan mulus</div>
-              </div>
-              <div class="tool-card">
-                <div class="tool-icon">🪃</div>
-                <div class="tool-name">Gada</div>
-                <div class="tool-desc">Sepasang alat kayu/plastik yang diputar simetris oleh kedua tangan</div>
-              </div>
-            </div>
-
-            <div class="theory-highlight">
-              <div class="theory-highlight-icon">📌</div>
-              <p>Untuk pemula seperti modul ini, kita akan fokus pada gerakan tubuh bebas tanpa alat terlebih dahulu. Penguasaan alat akan dipelajari di modul-modul selanjutnya.</p>
-            </div>
-          </div>
-        </div>
+        <div id="theoryContainer"></div>
 
         <!-- ========================
              SECTION 2: VIDEO
@@ -267,31 +182,16 @@
           <h2 class="section-title">Video Pembelajaran</h2>
         </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- Ganti src dengan: https://www.youtube.com/embed/VIDEO_ID -->
-            <!-- <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-            <div class="video-placeholder" id="videoPlaceholder">
-              <div class="video-play-btn" id="videoPlayBtn">
-                <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
-                  <path d="M8 5.14v14l11-7-11-7z"/>
-                </svg>
-              </div>
-              <div class="video-placeholder-text">Klik untuk Memutar Video</div>
-              <div class="video-placeholder-sub">Video 01 — Pengantar Senam Irama & Gerak Dasar</div>
-            </div>
-            <div class="video-played-msg" id="videoPlayedMsg">
-              <span>📺</span>
-              <p>Letakkan embed YouTube atau elemen &lt;video&gt; di sini.<br>
-              Contoh: <code>&lt;iframe src="https://www.youtube.com/embed/ID"&gt;&lt;/iframe&gt;</code></p>
-            </div>
+        <div class="video-card" id="videoCardWrap">
+          <div class="video-wrapper" id="videoWrapper">
+            <!-- Iframe YouTube atau placeholder akan dimasukkan via JS -->
           </div>
           <div class="video-info-bar">
             <div class="video-info-left">
-              <div class="video-info-title">Video 01 — Pengantar Senam Irama & Gerak Dasar</div>
-              <div class="video-info-sub">Instruktur: Tim Rythme · HD · Subtitle tersedia</div>
+              <div class="video-info-title" id="videoInfoTitle">—</div>
+              <div class="video-info-sub">Instruktur: Tim Rythme · Subtitle tersedia</div>
             </div>
-            <div class="video-duration">⏱ 12:34</div>
+            <div class="video-duration" id="videoInfoDuration">⏱ —</div>
           </div>
         </div>
 
@@ -306,7 +206,6 @@
 
         <div class="quiz-card">
 
-          <!-- Quiz header -->
           <div class="quiz-card-header">
             <div class="quiz-header-left">
               <div class="quiz-header-icon">✏️</div>
@@ -315,14 +214,37 @@
                 <div class="quiz-header-sub">Berdasarkan materi teks dan video di atas</div>
               </div>
             </div>
-            <div class="quiz-header-badge">5 Soal</div>
+            <div class="quiz-header-badge" id="quizHeaderBadge">— Soal</div>
           </div>
 
-          <!-- INTRO -->
-          <div class="quiz-intro" id="quizIntro">
-            <p>Kuis ini berisi 5 pertanyaan pilihan ganda dari materi yang telah kamu pelajari. Tidak ada batas waktu — baca setiap soal dengan seksama.</p>
+          <!-- TIDAK ADA SOAL -->
+          <div id="quizEmptyState" style="display:none; padding:32px 24px; text-align:center; color:var(--muted);">
+            Modul ini belum memiliki kuis.
+          </div>
+
+          <!-- STEP 0: Form nama sebelum mulai kuis -->
+          <div class="quiz-intro" id="nameFormStep">
+            <p>Sebelum memulai kuis, masukkan namamu terlebih dahulu. Nama dan hasil kuismu akan dicatat untuk keperluan pemantauan belajar.</p>
+
+            <div style="max-width: 360px; margin-bottom: 20px;">
+              <label for="userNameInput" style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:8px; color:var(--text);">Nama Lengkap</label>
+              <input
+                type="text"
+                id="userNameInput"
+                placeholder="Tulis nama kamu di sini..."
+                style="width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:10px; font-family:inherit; font-size:0.92rem; box-sizing:border-box;"
+              >
+              <div id="nameError" style="display:none; color:#DC2626; font-size:0.8rem; font-weight:600; margin-top:6px;">Nama wajib diisi sebelum melanjutkan</div>
+            </div>
+
+            <button class="btn-start-quiz" id="nameSubmitBtn">Lanjutkan ke Kuis →</button>
+          </div>
+
+          <!-- STEP 1: Intro kuis (rules) -->
+          <div class="quiz-intro" id="quizIntro" style="display:none;">
+            <p>Halo, <strong id="greetUserName">—</strong>! Kuis ini berisi <span id="introQuestionCount">—</span> pertanyaan pilihan ganda dari materi yang telah kamu pelajari. Tidak ada batas waktu — baca setiap soal dengan seksama.</p>
             <div class="quiz-rules-row">
-              <div class="quiz-rule">✅ 5 Pertanyaan</div>
+              <div class="quiz-rule" id="ruleQuestionCount">✅ — Pertanyaan</div>
               <div class="quiz-rule">🔘 Pilihan Ganda</div>
               <div class="quiz-rule">⏳ Tanpa Batas Waktu</div>
               <div class="quiz-rule">⚡ Skor Langsung</div>
@@ -330,96 +252,28 @@
             <button class="btn-start-quiz" id="quizStartBtn">Mulai Kuis →</button>
           </div>
 
-          <!-- QUIZ BODY -->
+          <!-- STEP 2: Soal-soal -->
           <div class="quiz-body" id="quizBody">
-
-            <!-- Progress dots -->
             <div class="quiz-progress-row">
-              <span class="quiz-progress-label" id="quizProgressLabel">Soal 1 / 5</span>
-              <div class="quiz-dots" id="quizDots">
-                <div class="q-dot active" data-q="0"></div>
-                <div class="q-dot" data-q="1"></div>
-                <div class="q-dot" data-q="2"></div>
-                <div class="q-dot" data-q="3"></div>
-                <div class="q-dot" data-q="4"></div>
-              </div>
+              <span class="quiz-progress-label" id="quizProgressLabel">Soal 1 / —</span>
+              <div class="quiz-dots" id="quizDots"></div>
             </div>
 
-            <!-- Q1 -->
-            <div class="question-card" id="q0">
-              <div class="question-num">Soal 01</div>
-              <div class="question-text">Senam irama pertama kali dipertandingkan di Olimpiade pada tahun berapa dan di kota mana?</div>
-              <ul class="options-list">
-                <li class="option-item" onclick="selectOption(this, 0, false)"><span class="opt-letter">A</span> 1980 di Moskow</li>
-                <li class="option-item" onclick="selectOption(this, 0, true)"><span class="opt-letter">B</span> 1984 di Los Angeles</li>
-                <li class="option-item" onclick="selectOption(this, 0, false)"><span class="opt-letter">C</span> 1988 di Seoul</li>
-                <li class="option-item" onclick="selectOption(this, 0, false)"><span class="opt-letter">D</span> 1992 di Barcelona</li>
-              </ul>
-            </div>
+            <div id="questionsContainer"></div>
 
-            <!-- Q2 -->
-            <div class="question-card" id="q1" style="display:none">
-              <div class="question-num">Soal 02</div>
-              <div class="question-text">Apa perbedaan utama senam irama dengan senam artistik?</div>
-              <ul class="options-list">
-                <li class="option-item" onclick="selectOption(this, 1, false)"><span class="opt-letter">A</span> Senam irama hanya dilakukan oleh perempuan</li>
-                <li class="option-item" onclick="selectOption(this, 1, false)"><span class="opt-letter">B</span> Senam irama menggunakan matras lebih tebal</li>
-                <li class="option-item" onclick="selectOption(this, 1, true)"><span class="opt-letter">C</span> Senam irama menekankan keindahan gerak dan keselarasan dengan musik</li>
-                <li class="option-item" onclick="selectOption(this, 1, false)"><span class="opt-letter">D</span> Senam irama tidak menggunakan alat apapun</li>
-              </ul>
-            </div>
-
-            <!-- Q3 -->
-            <div class="question-card" id="q2" style="display:none">
-              <div class="question-num">Soal 03</div>
-              <div class="question-text">Alat senam irama mana yang menggunakan dua buah benda yang dimainkan secara simetris oleh kedua tangan?</div>
-              <ul class="options-list">
-                <li class="option-item" onclick="selectOption(this, 2, false)"><span class="opt-letter">A</span> Pita</li>
-                <li class="option-item" onclick="selectOption(this, 2, false)"><span class="opt-letter">B</span> Simpai</li>
-                <li class="option-item" onclick="selectOption(this, 2, false)"><span class="opt-letter">C</span> Bola</li>
-                <li class="option-item" onclick="selectOption(this, 2, true)"><span class="opt-letter">D</span> Gada</li>
-              </ul>
-            </div>
-
-            <!-- Q4 -->
-            <div class="question-card" id="q3" style="display:none">
-              <div class="question-num">Soal 04</div>
-              <div class="question-text">Manfaat manakah yang BUKAN merupakan manfaat dari latihan senam irama secara rutin?</div>
-              <ul class="options-list">
-                <li class="option-item" onclick="selectOption(this, 3, false)"><span class="opt-letter">A</span> Meningkatkan kelenturan tubuh</li>
-                <li class="option-item" onclick="selectOption(this, 3, false)"><span class="opt-letter">B</span> Mengembangkan kepekaan musikal</li>
-                <li class="option-item" onclick="selectOption(this, 3, true)"><span class="opt-letter">C</span> Meningkatkan massa otot secara signifikan</li>
-                <li class="option-item" onclick="selectOption(this, 3, false)"><span class="opt-letter">D</span> Membangun kepercayaan diri</li>
-              </ul>
-            </div>
-
-            <!-- Q5 -->
-            <div class="question-card" id="q4" style="display:none">
-              <div class="question-num">Soal 05</div>
-              <div class="question-text">Untuk pemula di modul ini, apa yang disarankan untuk dipelajari terlebih dahulu sebelum menggunakan alat?</div>
-              <ul class="options-list">
-                <li class="option-item" onclick="selectOption(this, 4, false)"><span class="opt-letter">A</span> Langsung berlatih dengan pita</li>
-                <li class="option-item" onclick="selectOption(this, 4, false)"><span class="opt-letter">B</span> Mempelajari teknik simpai</li>
-                <li class="option-item" onclick="selectOption(this, 4, true)"><span class="opt-letter">C</span> Menguasai gerakan tubuh bebas tanpa alat</li>
-                <li class="option-item" onclick="selectOption(this, 4, false)"><span class="opt-letter">D</span> Menonton video kompetisi internasional</li>
-              </ul>
-            </div>
-
-            <!-- Nav buttons -->
             <div class="quiz-nav-row">
               <button class="quiz-nav-btn" id="btnPrev" onclick="prevQuestion()">← Sebelumnya</button>
               <button class="quiz-nav-btn primary" id="btnNext" onclick="nextQuestion()">Selanjutnya →</button>
             </div>
-
           </div>
 
-          <!-- RESULT -->
+          <!-- STEP 3: Hasil -->
           <div class="quiz-result" id="quizResult">
             <div class="result-score-box">
-              <div class="result-score-num" id="resultNum">0/5</div>
+              <div class="result-score-num" id="resultNum">0/0</div>
               <div class="result-score-label">Jawaban Benar</div>
             </div>
-            <div class="result-stars" id="resultStars">⭐⭐⭐⭐⭐</div>
+            <div class="result-stars" id="resultStars">—</div>
             <div class="result-message" id="resultMessage">—</div>
             <div class="result-sub" id="resultSub">—</div>
             <div class="result-btn-row">
@@ -429,17 +283,29 @@
           </div>
 
         </div>
-        <!-- end quiz-card -->
 
       </div>
-      <!-- end detail-main -->
     </div>
-    <!-- end detail-layout -->
 
   </main>
 
+  <script src="../admin/admin.js"></script>
   <script>
-    // ── Hamburger ──
+    // ===== Setup dasar =====
+    const urlParams = new URLSearchParams(window.location.search);
+    const moduleId  = urlParams.get('id');
+
+    let moduleData   = null;
+    let userName     = '';
+    let currentQ     = 0;
+    let answers      = {};   // { question_id: 'A' / 'B' / dst }
+    let answeredFlag = {};   // { question_id: true/false } -> sudah dipilih atau belum
+
+    let theoryRead   = false;
+    let videoWatched = false;
+    let quizDone     = false;
+
+    // ===== Hamburger (sama seperti halaman lain) =====
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const mobileNav    = document.getElementById('mobileNav');
 
@@ -453,142 +319,329 @@
     mobileNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         hamburgerBtn.classList.remove('open');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
         mobileNav.classList.remove('visible');
-        mobileNav.setAttribute('aria-hidden', 'true');
       });
     });
 
     document.addEventListener('click', e => {
       if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
         hamburgerBtn.classList.remove('open');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
         mobileNav.classList.remove('visible');
-        mobileNav.setAttribute('aria-hidden', 'true');
       }
     });
 
-    // ── Progress tracking ──
-    let theoryRead  = false;
-    let videoWatched = false;
-    let quizDone    = false;
+    // ===== Load data modul dari API =====
+    async function loadModule() {
+      if (!moduleId) {
+        showError();
+        return;
+      }
 
+      try {
+        const res = await fetch(API_BASE + `modules.php?id=${moduleId}`);
+
+        if (!res.ok) {
+          showError();
+          return;
+        }
+
+        moduleData = await res.json();
+        renderModule();
+
+      } catch (err) {
+        showError();
+      }
+    }
+
+    function showError() {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'block';
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    function capitalize(str) {
+      return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+    }
+
+    const levelEmoji = { pemula: '🌱', menengah: '⚡', lanjutan: '🔥' };
+
+    function renderModule() {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('detailLayout').style.display = 'grid';
+
+      const m = moduleData;
+      const numFormatted = String(m.module_number).padStart(2, '0');
+
+      // ---- Title & breadcrumb ----
+      document.getElementById('pageTitle').textContent = `${m.title} — Rythme`;
+      document.getElementById('breadcrumbCurrent').textContent = `Modul ${numFormatted}`;
+
+      // ---- Sidebar ----
+      document.getElementById('sidebarNum').textContent = `Modul ${numFormatted} / 12`;
+      document.getElementById('sidebarTitle').textContent = m.title;
+      document.getElementById('sidebarBadge').textContent = `${levelEmoji[m.level] || ''} ${capitalize(m.level)}`;
+      document.getElementById('subMateriCount').textContent = `${m.sections.length} sub-topik`;
+      document.getElementById('subVideoDuration').textContent = `${m.duration_minutes || 0} menit`;
+      document.getElementById('subKuisCount').textContent = `${m.quiz_questions.length} soal`;
+
+      if (m.thumbnail_url) {
+        document.getElementById('sidebarThumb').style.backgroundImage = `url('${m.thumbnail_url}')`;
+        document.getElementById('sidebarThumb').style.backgroundSize = 'cover';
+        document.getElementById('sidebarThumb').style.backgroundPosition = 'center';
+        document.getElementById('sidebarThumb').querySelector('.sidebar-thumb-icon').style.display = 'none';
+      }
+
+      // ---- Module header ----
+      document.getElementById('headerLevelBadge').textContent = `${levelEmoji[m.level] || ''} ${capitalize(m.level)}`;
+      document.getElementById('headerNumTag').textContent = `MODUL ${numFormatted} / 12`;
+      document.getElementById('headerTitle').textContent = m.title;
+      document.getElementById('headerDesc').textContent = m.description || '';
+      document.getElementById('headerVideoMeta').textContent = `1 Video (${m.duration_minutes || 0} menit)`;
+      document.getElementById('headerQuizMeta').textContent = `${m.quiz_questions.length} Soal Kuis`;
+
+      // ---- Theory sections ----
+      const theoryContainer = document.getElementById('theoryContainer');
+      if (m.sections.length === 0) {
+        theoryContainer.innerHTML = `<p style="color:var(--muted); padding: 20px 0;">Belum ada materi untuk modul ini.</p>`;
+      } else {
+        theoryContainer.innerHTML = m.sections.map((s, i) => `
+          <div class="theory-card">
+            <div class="theory-card-header">
+              <span class="theory-card-title">${i + 1}.${1} — ${escapeHtml(s.section_title)}</span>
+              ${s.section_tag ? `<span class="theory-tag">${escapeHtml(s.section_tag)}</span>` : ''}
+            </div>
+            <div class="theory-card-body">
+              <p>${escapeHtml(s.section_body)}</p>
+              ${s.highlight_text ? `
+                <div class="theory-highlight">
+                  <div class="theory-highlight-icon">💡</div>
+                  <p>${escapeHtml(s.highlight_text)}</p>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // ---- Video ----
+      const videoWrapper = document.getElementById('videoWrapper');
+      if (m.youtube_video_id) {
+        videoWrapper.innerHTML = `
+          <div class="video-placeholder" id="videoPlaceholder">
+            <div class="video-play-btn" id="videoPlayBtn">
+              <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+            </div>
+            <div class="video-placeholder-text">Klik untuk Memutar Video</div>
+            <div class="video-placeholder-sub">${escapeHtml(m.title)}</div>
+          </div>
+        `;
+
+        document.getElementById('videoPlayBtn').addEventListener('click', () => {
+          videoWrapper.innerHTML = `
+            <iframe
+              src="https://www.youtube.com/embed/${m.youtube_video_id}?autoplay=1"
+              title="${escapeHtml(m.title)}"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          `;
+          if (!videoWatched) { videoWatched = true; updateProgress(); }
+        });
+      } else {
+        videoWrapper.innerHTML = `
+          <div class="video-placeholder" style="cursor:default;">
+            <div class="video-placeholder-text">Video belum tersedia untuk modul ini</div>
+          </div>
+        `;
+      }
+
+      document.getElementById('videoInfoTitle').textContent = m.title;
+      document.getElementById('videoInfoDuration').textContent = `⏱ ${m.duration_minutes || 0} menit`;
+
+      // ---- Quiz header badge ----
+      document.getElementById('quizHeaderBadge').textContent = `${m.quiz_questions.length} Soal`;
+
+      if (m.quiz_questions.length === 0) {
+        document.getElementById('nameFormStep').style.display = 'none';
+        document.getElementById('quizEmptyState').style.display = 'block';
+      }
+
+      // Mark theory read otomatis saat video section terlihat (sama seperti versi statis sebelumnya)
+      const videoSection = document.getElementById('video');
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !theoryRead) {
+          theoryRead = true;
+          updateProgress();
+        }
+      }, { threshold: 0.2 });
+      if (videoSection) observer.observe(videoSection);
+    }
+
+    // ===== Progress sidebar =====
     function updateProgress() {
       const score = (theoryRead ? 40 : 0) + (videoWatched ? 30 : 0) + (quizDone ? 30 : 0);
       document.getElementById('progressFill').style.width = score + '%';
       document.getElementById('progressPct').textContent  = score + '%';
 
-      if (theoryRead)   document.getElementById('checkMateri').innerHTML = '✓';
-      if (videoWatched) document.getElementById('checkVideo').innerHTML  = '✓';
-      if (quizDone)     document.getElementById('checkKuis').innerHTML   = '✓';
-
-      if (theoryRead)   document.getElementById('checkMateri').classList.add('done');
-      if (videoWatched) document.getElementById('checkVideo').classList.add('done');
-      if (quizDone)     document.getElementById('checkKuis').classList.add('done');
+      if (theoryRead)   { document.getElementById('checkMateri').innerHTML = '✓'; document.getElementById('checkMateri').classList.add('done'); }
+      if (videoWatched) { document.getElementById('checkVideo').innerHTML  = '✓'; document.getElementById('checkVideo').classList.add('done'); }
+      if (quizDone)     { document.getElementById('checkKuis').innerHTML   = '✓'; document.getElementById('checkKuis').classList.add('done'); }
     }
 
-    // Mark theory read when video section scrolls into view
-    const videoSection = document.getElementById('video');
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !theoryRead) {
-        theoryRead = true;
-        updateProgress();
+    // ===== STEP 0: Form nama =====
+    document.getElementById('nameSubmitBtn').addEventListener('click', () => {
+      const input = document.getElementById('userNameInput');
+      const errorEl = document.getElementById('nameError');
+      const name = input.value.trim();
+
+      if (!name) {
+        errorEl.style.display = 'block';
+        input.style.borderColor = '#DC2626';
+        return;
       }
-    }, { threshold: 0.2 });
-    if (videoSection) observer.observe(videoSection);
 
-    // Video watched on click
-    const videoPlayBtn = document.getElementById('videoPlayBtn');
-    const videoPlaceholder = document.getElementById('videoPlaceholder');
-    const videoPlayedMsg   = document.getElementById('videoPlayedMsg');
+      userName = name;
+      errorEl.style.display = 'none';
 
-    if (videoPlayBtn) {
-      videoPlayBtn.addEventListener('click', () => {
-        videoPlaceholder.style.display = 'none';
-        videoPlayedMsg.style.display   = 'flex';
-        if (!videoWatched) {
-          videoWatched = true;
-          updateProgress();
-        }
-      });
-    }
+      document.getElementById('nameFormStep').style.display = 'none';
+      document.getElementById('quizIntro').style.display = 'block';
 
-    // ── Quiz logic ──
-    const TOTAL = 5;
-    let currentQ = 0;
-    let answers  = new Array(TOTAL).fill(null);
-    let answered = new Array(TOTAL).fill(false);
+      document.getElementById('greetUserName').textContent = userName;
+      document.getElementById('introQuestionCount').textContent = moduleData.quiz_questions.length;
+      document.getElementById('ruleQuestionCount').textContent = `✅ ${moduleData.quiz_questions.length} Pertanyaan`;
+    });
 
+    // ===== STEP 1: Mulai kuis -> render semua soal =====
     document.getElementById('quizStartBtn').addEventListener('click', () => {
       document.getElementById('quizIntro').style.display = 'none';
       document.getElementById('quizBody').style.display  = 'block';
+      renderQuestions();
       showQuestion(0);
     });
 
-    function selectOption(el, qIndex, isCorrect) {
-      if (answered[qIndex]) return;
-      answered[qIndex] = true;
-      answers[qIndex]  = isCorrect;
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      const questions  = moduleData.quiz_questions;
+
+      container.innerHTML = questions.map((q, i) => `
+        <div class="question-card" id="q${i}" style="display:none;">
+          <div class="question-num">Soal ${String(i + 1).padStart(2, '0')}</div>
+          <div class="question-text">${escapeHtml(q.question_text)}</div>
+          <ul class="options-list">
+            <li class="option-item" data-qid="${q.id}" data-opt="A" onclick="selectOption(this)"><span class="opt-letter">A</span> ${escapeHtml(q.option_a)}</li>
+            <li class="option-item" data-qid="${q.id}" data-opt="B" onclick="selectOption(this)"><span class="opt-letter">B</span> ${escapeHtml(q.option_b)}</li>
+            <li class="option-item" data-qid="${q.id}" data-opt="C" onclick="selectOption(this)"><span class="opt-letter">C</span> ${escapeHtml(q.option_c)}</li>
+            <li class="option-item" data-qid="${q.id}" data-opt="D" onclick="selectOption(this)"><span class="opt-letter">D</span> ${escapeHtml(q.option_d)}</li>
+          </ul>
+        </div>
+      `).join('');
+
+      // Render dots
+      const dotsContainer = document.getElementById('quizDots');
+      dotsContainer.innerHTML = questions.map((_, i) => `<div class="q-dot ${i === 0 ? 'active' : ''}" data-q="${i}"></div>`).join('');
+    }
+
+    function selectOption(el) {
+      const qid = el.dataset.qid;
+      if (answeredFlag[qid]) return; // sudah dijawab, tidak bisa diubah
+
+      answeredFlag[qid] = true;
+      answers[qid] = el.dataset.opt;
 
       const opts = el.closest('.options-list').querySelectorAll('.option-item');
-      opts.forEach(o => { o.style.pointerEvents = 'none'; o.style.cursor = 'default'; });
+      opts.forEach(o => { o.style.pointerEvents = 'none'; o.style.cursor = 'default'; o.classList.add('selected-temp'); });
 
-      el.classList.add(isCorrect ? 'correct' : 'wrong');
-      if (!isCorrect) {
-        opts.forEach(o => {
-          if (o.getAttribute('onclick') && o.getAttribute('onclick').includes('true'))
-            o.classList.add('correct');
-        });
-      }
+      el.classList.add('selected');
+
       updateDots();
     }
 
     function updateDots() {
+      const total = moduleData.quiz_questions.length;
       document.querySelectorAll('.q-dot').forEach((d, i) => {
         d.classList.remove('active', 'done');
-        if (i < currentQ)     d.classList.add('done');
+        if (i < currentQ) d.classList.add('done');
         else if (i === currentQ) d.classList.add('active');
       });
     }
 
     function showQuestion(index) {
-      for (let i = 0; i < TOTAL; i++)
-        document.getElementById('q' + i).style.display = (i === index) ? 'block' : 'none';
-
-      document.getElementById('quizProgressLabel').textContent = `Soal ${index + 1} / ${TOTAL}`;
+      const total = moduleData.quiz_questions.length;
+      for (let i = 0; i < total; i++) {
+        const el = document.getElementById('q' + i);
+        if (el) el.style.display = (i === index) ? 'block' : 'none';
+      }
+      document.getElementById('quizProgressLabel').textContent = `Soal ${index + 1} / ${total}`;
       document.getElementById('btnPrev').style.visibility = index > 0 ? 'visible' : 'hidden';
-      document.getElementById('btnNext').textContent = index === TOTAL - 1 ? 'Selesai & Lihat Skor ✓' : 'Selanjutnya →';
+      document.getElementById('btnNext').textContent = index === total - 1 ? 'Selesai & Lihat Skor ✓' : 'Selanjutnya →';
       updateDots();
     }
 
     function nextQuestion() {
-      if (currentQ < TOTAL - 1) { currentQ++; showQuestion(currentQ); }
-      else showResult();
+      const total = moduleData.quiz_questions.length;
+      if (currentQ < total - 1) { currentQ++; showQuestion(currentQ); }
+      else submitQuiz();
     }
 
     function prevQuestion() {
       if (currentQ > 0) { currentQ--; showQuestion(currentQ); }
     }
 
-    function showResult() {
+    // ===== Submit kuis ke server =====
+    async function submitQuiz() {
+      const btn = document.getElementById('btnNext');
+      btn.disabled = true;
+      btn.textContent = 'Menyimpan...';
+
+      try {
+        const res = await fetch(API_BASE + 'kuis.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            module_id: parseInt(moduleId),
+            user_name: userName,
+            answers: answers,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Gagal mengirim jawaban');
+
+        showResult(data.score, data.total_questions);
+
+      } catch (err) {
+        alert('Gagal mengirim jawaban: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Selesai & Lihat Skor ✓';
+      }
+    }
+
+    function showResult(score, total) {
       document.getElementById('quizBody').style.display   = 'none';
       document.getElementById('quizResult').style.display = 'block';
 
-      const correct = answers.filter(a => a === true).length;
-      document.getElementById('resultNum').textContent = correct + ' / ' + TOTAL;
+      document.getElementById('resultNum').textContent = `${score} / ${total}`;
 
-      const stars = ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'];
-      document.getElementById('resultStars').textContent = stars[correct - 1] || '';
+      const pct = (score / total) * 100;
+      const starCount = Math.max(1, Math.round((score / total) * 5));
+      document.getElementById('resultStars').textContent = '⭐'.repeat(starCount);
 
       let msg, sub;
-      if (correct === 5) {
-        msg = 'Sempurna! Kamu siap ke modul berikutnya! 🎉';
+      if (pct === 100) {
+        msg = `Sempurna, ${userName}! Kamu siap ke modul berikutnya! 🎉`;
         sub = 'Semua konsep dasar sudah dikuasai dengan sangat baik.';
-      } else if (correct >= 3) {
-        msg = 'Bagus! Pemahamanmu sudah cukup kuat. 👍';
+      } else if (pct >= 60) {
+        msg = `Bagus, ${userName}! Pemahamanmu sudah cukup kuat. 👍`;
         sub = 'Kamu boleh lanjut, atau ulangi untuk memantapkan materi.';
       } else {
-        msg = 'Jangan menyerah! Baca ulang materinya, ya. 📖';
+        msg = `Jangan menyerah, ${userName}! Baca ulang materinya, ya. 📖`;
         sub = 'Disarankan membaca ulang materi dan menonton video sebelum lanjut.';
       }
 
@@ -601,22 +654,18 @@
 
     function retryQuiz() {
       currentQ = 0;
-      answers  = new Array(TOTAL).fill(null);
-      answered = new Array(TOTAL).fill(false);
+      answers = {};
+      answeredFlag = {};
 
       document.getElementById('quizResult').style.display = 'none';
       document.getElementById('quizBody').style.display   = 'block';
 
-      document.querySelectorAll('.option-item').forEach(o => {
-        o.classList.remove('correct', 'wrong');
-        o.style.pointerEvents = '';
-        o.style.cursor = '';
-      });
+      renderQuestions();
       showQuestion(0);
     }
 
-    // Init
-    showQuestion(0);
+    // ===== Init =====
+    loadModule();
   </script>
 
 </body>

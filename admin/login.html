@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin — Rythme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="login-page">
+
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+            <path d="M3 12 Q6 6 9 12 Q12 18 15 12 Q18 6 21 12"/>
+          </svg>
+        </div>
+        Ryth<span class="accent">me</span>
+      </div>
+
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-sub">Masuk untuk mengelola modul pembelajaran</p>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required>
+        </div>
+
+        <div class="login-error" id="loginError" style="display:none;"></div>
+
+        <button type="submit" class="btn-login" id="loginBtn">Masuk</button>
+      </form>
+
+      <a href="../index.html" class="login-back">← Kembali ke website</a>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorBox = document.getElementById('loginError');
+      const btn = document.getElementById('loginBtn');
+
+      errorBox.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Memproses...';
+
+      try {
+        const res = await fetch(API_BASE + 'auth.php?action=login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Login gagal');
+        }
+
+        // Simpan token di localStorage supaya tetap login walau refresh
+        localStorage.setItem('admin_token', data.token);
+        localStorage.setItem('admin_username', data.username);
+
+        window.location.href = 'dashboard.html';
+
+      } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Masuk';
+      }
+    });
+
+    // Kalau sudah login, langsung redirect ke dashboard
+    if (localStorage.getItem('admin_token')) {
+      window.location.href = 'dashboard.html';
+    }
+  </script>
+
+</body>
+</html>
